@@ -24,16 +24,14 @@ public class RightEyeDisplay : MonoBehaviour
 
     void Update()
     {
-        if (RoundStart)
+        while (RoundStart)
         {
+            RoundStart = false;
+            //右眼畫面開始
+            _itemChange.Change = true;
+            m_Fade.BackGroundControl(false);
+            //右眼畫面結束
 
-            for (RoundCount = 1; RoundCount <= RoundNum; RoundCount++)
-            {
-                //右眼畫面開始
-                _itemChange.Change = true;
-                m_Fade.BackGroundControl(false);
-                //右眼畫面結束
-            }
         }
 
     }

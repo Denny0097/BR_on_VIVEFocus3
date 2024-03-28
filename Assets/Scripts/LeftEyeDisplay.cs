@@ -1,18 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class LeftEyeDisplay : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public VideoPlayer _video;
+
+    public void PlayVideo()
     {
-        
+        _video.Play();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void PauseVideo()
     {
-        
+        _video.Pause();
     }
 }

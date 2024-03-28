@@ -16,9 +16,9 @@ public class FadeInOut : MonoBehaviour
     {
         //計算時間
         float FadeDuration = DurationTime / 2;
-        //fadeSpeed = 1 / FadeDuration;
+        fadeSpeed = 1 / FadeDuration;
         //使背景滿屏
-        rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
+        //rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
         Original = rawImage.color ;
         //rawImage.color = Color.white;
     }
