@@ -7,14 +7,20 @@ using UnityEngine.Video;
 public class LeftEyeDisplay : MonoBehaviour
 {
     public VideoPlayer _video;
+    public DisplayControl _displayContral;
 
-    public void PlayVideo()
+    void Update()
     {
-        _video.Play();
-    }
+        // 收到開始訊號後開始右眼實驗畫面的顯示
+        if (_displayContral._roundStart)
+        {
+            _video.Play();
+        }
 
-    public void PauseVideo()
-    {
-        _video.Pause();
+        // 收到結束訊號後停止右眼實驗畫面的顯示
+        if (_displayContral._roundEnd)
+        {
+            _video.Pause();
+        }
     }
 }

@@ -15,6 +15,7 @@ public class RightEyeDisplay : MonoBehaviour
     [HideInInspector]
     public bool RoundStart = false;
 
+    public DisplayControl _displayContral;
 
 
     void Start()
@@ -24,17 +25,23 @@ public class RightEyeDisplay : MonoBehaviour
 
     void Update()
     {
-        while (RoundStart)
+        //收到開始訊號後開始右眼實驗畫面的顯示
+        while (_displayContral._roundStart)
         {
-            RoundStart = false;
-            //右眼畫面開始
-            _itemChange.Change = true;
-            m_Fade.BackGroundControl(false);
-            //右眼畫面結束
 
+            StartCoroutine(ExperimentPlay_Right());
         }
 
     }
+    private IEnumerator ExperimentPlay_Right()
+    {
 
+        _displayContral._roundStart = false;
+        //右眼畫面開始
+        _itemChange.Change = true;
+        yield return new WaitForSeconds(1.0f);
+        m_Fade.BackGroundControl(false);
+        //右眼畫面結束
 
+    }
 }

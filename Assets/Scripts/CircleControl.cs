@@ -9,10 +9,10 @@ using Wave.OpenXR;
 using TMPro;
 using Wave.Essence.Eye;
 
-public class LogMessage
-{
-    public string message;
-}
+//public class LogMessage
+//{
+//    public string message;
+//}
 
 public class CircleControl : MonoBehaviour
 {
