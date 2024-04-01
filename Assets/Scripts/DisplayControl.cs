@@ -70,6 +70,7 @@ public class DisplayControl : MonoBehaviour
         if (InputDeviceControl.KeyDown(InputDeviceControl.ControlDevice.Right, CommonUsages.triggerButton) && !_gameStart)
         //if (Input.anyKey &&!_gameStart)
         {
+            intro.SetActive(false);
             _gameStart = true;
             StartCoroutine(RunExperiment());
 
@@ -88,7 +89,11 @@ public class DisplayControl : MonoBehaviour
     /// <returns></returns>
     private IEnumerator RunExperiment()
     {
-        while(RoundCount <= RoundNum && _gameStart == true)
+        PlayerPrefs.SetInt("GetData", 1);
+        _logMessage.message = "Experiment start";
+        _dataManager.SaveLogMessage(_logMessage);
+
+        while (RoundCount <= RoundNum && _gameStart == true)
         {
             //按a暫停
             //
@@ -98,15 +103,29 @@ public class DisplayControl : MonoBehaviour
 
             //自動繼續
             _roundStart = true;
+            _roundStart = false;
+
+            _logMessage.message = "round" + RoundCount.ToString() + " start";
+            _dataManager.SaveLogMessage(_logMessage);
+
+
+
             yield return new WaitForSeconds(_roundTime);
+
+
+
+            _logMessage.message = "round" + RoundCount.ToString() + " end";
+            _dataManager.SaveLogMessage(_logMessage);
+
 
             RoundCount++;
             if (RoundCount == RoundNum)
                 _gameStart = false;
 
-            _roundStart = false;
         }
-        
+
+        PlayerPrefs.SetInt("GetData", 0);
+
 
 
     }
