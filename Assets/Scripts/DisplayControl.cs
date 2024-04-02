@@ -18,8 +18,8 @@ public class LogMessage
 public class DisplayControl : MonoBehaviour
 {
     //兩眼畫面物件
-    public RightEyeDisplay _itemsScreen;
-    public LeftEyeDisplay _videoScreen;
+    public GameObject _itemsScreen;
+    public GameObject _videoScreen;
 
     //實驗介紹畫面
     public GameObject intro;
@@ -67,12 +67,14 @@ public class DisplayControl : MonoBehaviour
     void Update()
     {
         //按triger開始實驗
-        if (InputDeviceControl.KeyDown(InputDeviceControl.ControlDevice.Right, CommonUsages.triggerButton) && !_gameStart)
-        //if (Input.anyKey &&!_gameStart)
+        //if (InputDeviceControl.KeyDown(InputDeviceControl.ControlDevice.Right, CommonUsages.triggerButton) && !_gameStart)
+        if (Input.anyKey &&!_gameStart)
         {
             intro.SetActive(false);
+
             _gameStart = true;
-            StartCoroutine(RunExperiment());
+            _itemsScreen.SetActive(true);
+            _videoScreen.SetActive(true);
 
         }
         //暫停再按a重來
