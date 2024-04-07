@@ -5,35 +5,32 @@ using UnityEngine.Networking;
 
 public class RightEyeDisplay : MonoBehaviour
 {
+    public DisplayControl _displayControl;
     public FadeInOut m_Fade;
     public ItemChange _itemChange;
-    //紀錄實驗次數跟設定實驗次數
-    private int RoundCount = 0;
-    public int RoundNum;
-
-    //右眼畫面開始依據
-    [HideInInspector]
-    public bool RoundStart = false;
 
     private bool _invoked = false;
 
-    //public DisplayControl _displayControl;
 
+    
     void Update()
     {
-        if (!_invoked)
+        //收到開始回合的訊號，右眼內容開始呈現
+        if (_displayControl._roundStart&&!_invoked)
         {
             _invoked = true;
             m_Fade.gameObject.SetActive(true);
-            InvokeRepeating("ExperimentPlay_Right", 0f, 30f);
-            InvokeRepeating("MakeFadeChange", 0f, 15f);
+            InvokeRepeating("ExperimentPlay_Right", 0f, _displayControl._roundTime);
+            InvokeRepeating("MakeFadeChange", 0f, _displayControl._roundTime / 2);
+            if (_displayControl._roundCount == _displayControl._roundNum)
+            {
+
+                m_Fade.gameObject.SetActive(false);
+
+            }
         }
 
-        if(RoundCount == RoundNum)
-        {
-
-            m_Fade.gameObject.SetActive(false);
-        }
+        
     }
 
 
@@ -46,6 +43,8 @@ public class RightEyeDisplay : MonoBehaviour
         // }
     }
 
+
+    //改變 fade in/out 的狀態
     private void MakeFadeChange()
     {
         if (m_Fade.isBlack)
@@ -58,9 +57,10 @@ public class RightEyeDisplay : MonoBehaviour
         }
     }
 
+
     private IEnumerator ExperimentPlay_RightCoroutine()
     {
-        RoundCount++;
+        _displayControl._roundCount++;
         _itemChange.ChangeImage();
 
         //m_Fade.FadeinhThenFadeout();

@@ -25,35 +25,22 @@ public class ItemChange : MonoBehaviour
 
     Texture randomImage;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        //LoadImages();
-        ChangeImage();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Change)
-        {
-            Change = false;
-            ChangeImage();
-        }
-
-        ////for testing 
-        //if (Input.anyKey)
-        //{
-        //    ChangeImage();
-        //}
-
-    }
-
     //void LoadImages()
     //{
     //    // 從Resources文件夾中加載所有Sprite
     //    Items = Resources.LoadAll<Texture>(resourcesFolderPath);
     //}
+
+   
+    //Change two image
+    public void ChangeImage()
+    {
+        randomImage = GetRandomImage();
+        Upper.texture = randomImage;
+        randomImage = GetRandomImage();
+        Down.texture = randomImage;
+    }
+
 
     Texture GetRandomImage()
     {
@@ -69,14 +56,4 @@ public class ItemChange : MonoBehaviour
         HadChoosen = randomIndex;
         return Items[randomIndex];
     }
-
-    //Change two image
-    public void ChangeImage()
-    {
-        randomImage = GetRandomImage();
-        Upper.texture = randomImage;
-        randomImage = GetRandomImage();
-        Down.texture = randomImage;
-    }
-
 }

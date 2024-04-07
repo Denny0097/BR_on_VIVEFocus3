@@ -17,29 +17,30 @@ public class LogMessage
 
 public class DisplayControl : MonoBehaviour
 {
-    //兩眼畫面物件
-    public GameObject _itemsScreen;
-    public GameObject _videoScreen;
+   
+    public GameObject _itemsScreen; //右眼畫面物件
+    public GameObject _videoScreen; //左眼畫面物件
 
-    //實驗介紹畫面
-    public GameObject intro;
-
-    //實驗時間(from start to end per round)
-    public float _roundTime = 30;
-
-    //實驗回合總數設定
-    public int RoundNum;
-
-    //實驗當前回合
-    private int RoundCount = 1;
     
-    [HideInInspector]//實驗是否開始了
-    public bool _gameStart = false;
+    public GameObject intro;//實驗介紹畫面
 
 
-    //實驗中每回合的tag，start指示回合開始、end指示回合結束
-    public bool _roundStart = false;
-    public bool _roundEnd = false;
+    public float _roundTime = 30; //實驗時間(from start to end per round)
+
+   
+    public int _roundNum; //實驗回合總數設定
+
+    
+    public int _roundCount = 1;//實驗當前回合
+
+
+    [HideInInspector]
+    public bool _gameStart = false;     //實驗是否開始了
+    [HideInInspector]
+    public bool _roundStart = false;    //實驗中每回合的tag，start指示回合開始、end指示回合結束
+    [HideInInspector]
+    public bool _roundEnd = false;    //實驗中每回合的tag，start指示回合開始、end指示回合結束
+
 
 
     //bool waitingforinput = false;
@@ -72,14 +73,28 @@ public class DisplayControl : MonoBehaviour
         {
             intro.SetActive(false);
 
+            PlayerPrefs.SetInt("GetData", 1);//Take DataManager on
+
+            _logMessage.message = "Experiments start";
+            _dataManager.SaveLogMessage(_logMessage);
+
+
             _gameStart = true;
+
+            _roundStart = true;
+
+
+            //Run experiment -> RunExperiment()
             _itemsScreen.SetActive(true);
             _videoScreen.SetActive(true);
 
+            StartCoroutine(RunExperiment());
         }
         //暫停再按a重來
         //
     }
+
+
 
     /// <summary>
     /// RoundCount(當前回合)<=RoundNum(設定回合數)時，實驗開始，直到滿足回合數，
@@ -91,11 +106,8 @@ public class DisplayControl : MonoBehaviour
     /// <returns></returns>
     private IEnumerator RunExperiment()
     {
-        PlayerPrefs.SetInt("GetData", 1);
-        _logMessage.message = "Experiment start";
-        _dataManager.SaveLogMessage(_logMessage);
-
-        while (RoundCount <= RoundNum && _gameStart == true)
+        
+        while (_roundCount <= _roundNum && _gameStart == true)
         {
             //按a暫停
             //
@@ -104,32 +116,37 @@ public class DisplayControl : MonoBehaviour
 
 
             //自動繼續
-            _roundStart = true;
-            _roundStart = false;
-
-            _logMessage.message = "round" + RoundCount.ToString() + " start";
+           
+            _logMessage.message = "round" + _roundCount.ToString() + " start";
             _dataManager.SaveLogMessage(_logMessage);
 
 
 
-            yield return new WaitForSeconds(_roundTime);
+            _logMessage.message = "Fade in now";
+            _dataManager.SaveLogMessage(_logMessage);
+
+            yield return new WaitForSeconds(_roundTime/2);
+
+
+            _logMessage.message = "Fade out now";
+            _dataManager.SaveLogMessage(_logMessage);
+
+            yield return new WaitForSeconds(_roundTime / 2);
 
 
 
-            _logMessage.message = "round" + RoundCount.ToString() + " end";
+            _logMessage.message = "round" + _roundCount.ToString() + " end";
             _dataManager.SaveLogMessage(_logMessage);
 
 
-            RoundCount++;
-            if (RoundCount == RoundNum)
+            _roundCount++;
+            if (_roundCount == _roundNum)
                 _gameStart = false;
 
         }
 
         PlayerPrefs.SetInt("GetData", 0);
-
-
-
+        _videoScreen.SetActive(false);
     }
 
 
