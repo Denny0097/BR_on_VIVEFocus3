@@ -23,8 +23,7 @@ public class FadeInOut : MonoBehaviour
     {
         rawImage.gameObject.SetActive(true);
         OriginColor = rawImage.color ;
-        //rawImage.color = Color.white;
-        _fadeSpeed = 1 / _displayControl._roundTime;
+        _fadeSpeed = 1 / (_displayControl._roundTime/2);
     }
 
 

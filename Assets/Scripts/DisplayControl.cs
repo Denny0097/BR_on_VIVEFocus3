@@ -22,7 +22,8 @@ public class DisplayControl : MonoBehaviour
     public GameObject _videoScreen; //左眼畫面物件
 
     
-    public GameObject intro;//實驗介紹畫面
+    public GameObject _intro1;//實驗介紹畫面
+    public GameObject _intro2;
 
 
     public float _roundTime = 30; //實驗時間(from start to end per round)
@@ -38,10 +39,7 @@ public class DisplayControl : MonoBehaviour
     public bool _gameStart = false;     //實驗是否開始了
     [HideInInspector]
     public bool _roundStart = false;    //實驗中每回合的tag，start指示回合開始、end指示回合結束
-    [HideInInspector]
-    public bool _roundEnd = false;    //實驗中每回合的tag，start指示回合開始、end指示回合結束
-
-
+    
 
     //bool waitingforinput = false;
 
@@ -58,7 +56,7 @@ public class DisplayControl : MonoBehaviour
     /// </summary>
     void Start()
     {
-        
+        //GetComponent<AudioListener>().enabled = false;
     }
 
 
@@ -71,11 +69,12 @@ public class DisplayControl : MonoBehaviour
         //if (InputDeviceControl.KeyDown(InputDeviceControl.ControlDevice.Right, CommonUsages.triggerButton) && !_gameStart)
         if (Input.anyKey &&!_gameStart)
         {
-            intro.SetActive(false);
+            _intro1.SetActive(false);
+            _intro2.SetActive(false);
 
             PlayerPrefs.SetInt("GetData", 1);//Take DataManager on
 
-            _logMessage.message = "Experiments start";
+            _logMessage.message = "Experiment start";
             _dataManager.SaveLogMessage(_logMessage);
 
 
@@ -89,9 +88,12 @@ public class DisplayControl : MonoBehaviour
             _videoScreen.SetActive(true);
 
             StartCoroutine(RunExperiment());
+            //After experiment, turn to initial 
+            
+            
         }
         //暫停再按a重來
-        //
+        ///
     }
 
 
@@ -135,18 +137,28 @@ public class DisplayControl : MonoBehaviour
 
 
 
-            _logMessage.message = "round" + _roundCount.ToString() + " end";
+            _logMessage.message = "round" + _roundCount.ToString() + " over";
             _dataManager.SaveLogMessage(_logMessage);
 
 
             _roundCount++;
+
             if (_roundCount == _roundNum)
+            {
                 _gameStart = false;
+                _roundStart = false;
+                _roundCount = 1;
+                _intro1.SetActive(true);
+                _intro2.SetActive(true);
+            }
 
         }
 
+        _logMessage.message = "Experiment over";
+        _dataManager.SaveLogMessage(_logMessage);
+
         PlayerPrefs.SetInt("GetData", 0);
-        _videoScreen.SetActive(false);
+        
     }
 
 

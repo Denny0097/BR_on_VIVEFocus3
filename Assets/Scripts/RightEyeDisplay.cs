@@ -10,6 +10,7 @@ public class RightEyeDisplay : MonoBehaviour
     public ItemChange _itemChange;
 
     private bool _invoked = false;
+    private bool _runned = false;
 
 
     
@@ -22,15 +23,16 @@ public class RightEyeDisplay : MonoBehaviour
             m_Fade.gameObject.SetActive(true);
             InvokeRepeating("ExperimentPlay_Right", 0f, _displayControl._roundTime);
             InvokeRepeating("MakeFadeChange", 0f, _displayControl._roundTime / 2);
-            if (_displayControl._roundCount == _displayControl._roundNum)
-            {
-
-                m_Fade.gameObject.SetActive(false);
-
-            }
         }
 
-        
+        if(_displayControl._roundCount == _displayControl._roundNum && _runned)
+        {
+
+            m_Fade.gameObject.SetActive(false);
+            _itemChange.Upper.texture = _itemChange.Items[8];
+            _itemChange.Lower.texture = _itemChange.Items[8];
+
+        }
     }
 
 
@@ -60,7 +62,7 @@ public class RightEyeDisplay : MonoBehaviour
 
     private IEnumerator ExperimentPlay_RightCoroutine()
     {
-        _displayControl._roundCount++;
+        
         _itemChange.ChangeImage();
 
         //m_Fade.FadeinhThenFadeout();
