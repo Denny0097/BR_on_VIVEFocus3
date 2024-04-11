@@ -67,7 +67,7 @@ public class DisplayControl : MonoBehaviour
     {
         //按triger開始實驗
         //if (InputDeviceControl.KeyDown(InputDeviceControl.ControlDevice.Right, CommonUsages.triggerButton) && !_gameStart)
-        if (Input.anyKey &&!_gameStart)
+        if (Input.anyKey && !_gameStart)
         {
             _intro1.SetActive(false);
             _intro2.SetActive(false);
@@ -89,12 +89,28 @@ public class DisplayControl : MonoBehaviour
 
             StartCoroutine(RunExperiment());
             //After experiment, turn to initial 
-            
-            
+
+
         }
+
+        //受試者反應紀錄
+        if (InputDeviceControl.KeyDown(InputDeviceControl.ControlDevice.Right, CommonUsages.triggerButton) && _gameStart)
+        {
+            _logMessage.message = "round" + _roundCount.ToString() + " respond time";
+            _dataManager.SaveLogMessage(_logMessage);
+
+        }
+
         //暫停再按a重來
         ///
+        
+
+
     }
+
+
+
+
 
 
 
