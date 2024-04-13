@@ -12,8 +12,9 @@ public class RightEyeDisplay : MonoBehaviour
     private bool _invoked = false;
     private bool _runned = false;
 
-
     
+
+
     void Update()
     {
         //收到開始回合的訊號，右眼內容開始呈現
@@ -52,10 +53,14 @@ public class RightEyeDisplay : MonoBehaviour
     {
         if (m_Fade.isBlack)
         {
+            _displayControl._logMessage.message = "Fade in now";
+            _displayControl._dataManager.SaveLogMessage(_displayControl._logMessage);
             m_Fade.isBlack = false;
         }
         else
         {
+            _displayControl._logMessage.message = "Fade out now";
+            _displayControl._dataManager.SaveLogMessage(_displayControl._logMessage);
             m_Fade.isBlack = true;
         }
     }
@@ -63,7 +68,7 @@ public class RightEyeDisplay : MonoBehaviour
 
     private IEnumerator ExperimentPlay_RightCoroutine()
     {
-        
+        _displayControl._roundStart = false;
         _itemChange.ChangeImage();
 
         //m_Fade.FadeinhThenFadeout();

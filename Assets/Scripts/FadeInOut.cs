@@ -42,7 +42,7 @@ public class FadeInOut : MonoBehaviour
 
     public void Fadein()
     {
-        Debug.Log("Fade in now "+ Time.realtimeSinceStartup * 1000);
+       
         Color newColor = rawImage.color; // 複製原始顏色
         float t = Time.deltaTime * _fadeSpeed;
         newColor.a -= t;
@@ -53,7 +53,7 @@ public class FadeInOut : MonoBehaviour
     public void Fadeout()
     {
 
-        Debug.Log("Fade out now "+ Time.realtimeSinceStartup * 1000);
+        
         Color newColor = rawImage.color; // 複製原始顏色
         float t = Time.deltaTime * _fadeSpeed;
         newColor.a += t;

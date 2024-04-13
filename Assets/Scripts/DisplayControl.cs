@@ -20,7 +20,7 @@ public class DisplayControl : MonoBehaviour
    
     public GameObject _itemsScreen; //右眼畫面物件
     public GameObject _videoScreen; //左眼畫面物件
-
+    
     
     public GameObject _intro1;//實驗介紹畫面
     public GameObject _intro2;
@@ -40,7 +40,7 @@ public class DisplayControl : MonoBehaviour
     [HideInInspector]
     public bool _roundStart = false;    //實驗中每回合的tag，start指示回合開始、end指示回合結束
     
-
+    private bool _isRespond = false;
     //bool waitingforinput = false;
 
     //triger訊號紀錄
@@ -94,8 +94,9 @@ public class DisplayControl : MonoBehaviour
         }
 
         //受試者反應紀錄
-        if (InputDeviceControl.KeyDown(InputDeviceControl.ControlDevice.Right, CommonUsages.triggerButton) && _gameStart)
+        if (InputDeviceControl.KeyDown(InputDeviceControl.ControlDevice.Right, CommonUsages.triggerButton) && !_isRespond)
         {
+            _isRespond = true;
             _logMessage.message = "round" + _roundCount.ToString() + " respond time";
             _dataManager.SaveLogMessage(_logMessage);
 
@@ -127,30 +128,16 @@ public class DisplayControl : MonoBehaviour
         
         while (_roundCount <= _roundNum && _gameStart == true)
         {
-            //按a暫停
-            //
-            //if (InputDeviceControl.KeyDown(InputDeviceControl.ControlDevice.Right, WVR_InputId.))
-            //yield return StartCoroutine(WaitUntilInput());
+            _roundStart = true;
 
+            _isRespond = false;//每回合都設定獨立的反應按鈕
 
-            //自動繼續
-           
             _logMessage.message = "round" + _roundCount.ToString() + " start";
             _dataManager.SaveLogMessage(_logMessage);
 
 
-
-            _logMessage.message = "Fade in now";
-            _dataManager.SaveLogMessage(_logMessage);
-
-            yield return new WaitForSeconds(_roundTime/2);
-
-
-            _logMessage.message = "Fade out now";
-            _dataManager.SaveLogMessage(_logMessage);
-
-            yield return new WaitForSeconds(_roundTime / 2);
-
+            //stall until item change and its mean next round is readying
+            yield return new WaitForSeconds(_roundTime );
 
 
             _logMessage.message = "round" + _roundCount.ToString() + " over";

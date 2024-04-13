@@ -31,14 +31,13 @@ public class LeftEyeDisplay : MonoBehaviour
             _video.Stop();
             _video.gameObject.SetActive(false);
             Debug.Log("Close video");
-            
         }
         else if(_displayControl._gameStart && !_videoPlaying)
         {
             _videoPlaying = true;
             _video.gameObject.SetActive(true);
-            _video.Play();
-            Debug.Log("Play video");
+            //_video.Play();
+            //Debug.Log("Play video");
         }
     }
 
