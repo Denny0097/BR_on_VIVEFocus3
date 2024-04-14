@@ -12,7 +12,7 @@ public class FadeInOut : MonoBehaviour
 
     [HideInInspector]
     public bool isBlack = false;//不透明狀態
-    
+
     public float _fadeSpeed = 0.07f;//透明度變化速率
     public RawImage rawImage;
 
@@ -22,8 +22,13 @@ public class FadeInOut : MonoBehaviour
     void Start()
     {
         rawImage.gameObject.SetActive(true);
+<<<<<<< HEAD
         OriginColor = rawImage.color ;
         _fadeSpeed = 1 / (_displayControl._roundTime/2);
+=======
+        OriginColor = rawImage.color;
+        _fadeSpeed = 1 / (_displayControl._roundTime / 2);
+>>>>>>> VideoFix
     }
 
 
@@ -42,7 +47,11 @@ public class FadeInOut : MonoBehaviour
 
     public void Fadein()
     {
+<<<<<<< HEAD
        
+=======
+
+>>>>>>> VideoFix
         Color newColor = rawImage.color; // 複製原始顏色
         float t = Time.deltaTime * _fadeSpeed;
         newColor.a -= t;
@@ -53,7 +62,11 @@ public class FadeInOut : MonoBehaviour
     public void Fadeout()
     {
 
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> VideoFix
         Color newColor = rawImage.color; // 複製原始顏色
         float t = Time.deltaTime * _fadeSpeed;
         newColor.a += t;

@@ -31,7 +31,7 @@ public class ItemChange : MonoBehaviour
     //    Items = Resources.LoadAll<Texture>(resourcesFolderPath);
     //}
 
-   
+
     //Change two image
     public void ChangeImage()
     {
@@ -49,7 +49,11 @@ public class ItemChange : MonoBehaviour
         int randomIndex;
         do
         {
+<<<<<<< HEAD
             randomIndex = Random.Range(0, Items.Length-1);
+=======
+            randomIndex = Random.Range(0, Items.Length - 1);
+>>>>>>> VideoFix
         }
         while (randomIndex == HadChoosen);
 

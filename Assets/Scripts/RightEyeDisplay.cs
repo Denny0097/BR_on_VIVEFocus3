@@ -11,14 +11,21 @@ public class RightEyeDisplay : MonoBehaviour
 
     private bool _invoked = false;
     private bool _runned = false;
+<<<<<<< HEAD
 
     
 
 
+=======
+
+
+
+
+>>>>>>> VideoFix
     void Update()
     {
         //收到開始回合的訊號，右眼內容開始呈現
-        if (_displayControl._roundStart&&!_invoked)
+        if (_displayControl._roundStart && !_invoked)
         {
             _invoked = true;
             _runned = true;
@@ -27,7 +34,11 @@ public class RightEyeDisplay : MonoBehaviour
             InvokeRepeating("MakeFadeChange", 0f, _displayControl._roundTime / 2);
         }
 
+<<<<<<< HEAD
         if(_displayControl._roundCount == _displayControl._roundNum && _runned)
+=======
+        if (_displayControl._roundCount == _displayControl._roundNum && _runned)
+>>>>>>> VideoFix
         {
             _runned = false;
             m_Fade.gameObject.SetActive(false);

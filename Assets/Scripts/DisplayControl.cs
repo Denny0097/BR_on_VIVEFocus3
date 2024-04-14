@@ -17,21 +17,28 @@ public class LogMessage
 
 public class DisplayControl : MonoBehaviour
 {
-   
+
     public GameObject _itemsScreen; //右眼畫面物件
     public GameObject _videoScreen; //左眼畫面物件
+<<<<<<< HEAD
     
     
     public GameObject _intro1;//實驗介紹畫面
+=======
+
+
+    public GameObject _intro1;//實驗介紹畫面
+
+>>>>>>> VideoFix
     public GameObject _intro2;
 
 
     public float _roundTime = 30; //實驗時間(from start to end per round)
 
-   
+
     public int _roundNum; //實驗回合總數設定
 
-    
+
     public int _roundCount = 1;//實驗當前回合
 
 
@@ -39,7 +46,11 @@ public class DisplayControl : MonoBehaviour
     public bool _gameStart = false;     //實驗是否開始了
     [HideInInspector]
     public bool _roundStart = false;    //實驗中每回合的tag，start指示回合開始、end指示回合結束
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> VideoFix
     private bool _isRespond = false;
     //bool waitingforinput = false;
 
@@ -104,7 +115,11 @@ public class DisplayControl : MonoBehaviour
 
         //暫停再按a重來
         ///
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> VideoFix
 
 
     }
@@ -125,7 +140,7 @@ public class DisplayControl : MonoBehaviour
     /// <returns></returns>
     private IEnumerator RunExperiment()
     {
-        
+
         while (_roundCount <= _roundNum && _gameStart == true)
         {
             _roundStart = true;
@@ -137,7 +152,11 @@ public class DisplayControl : MonoBehaviour
 
 
             //stall until item change and its mean next round is readying
+<<<<<<< HEAD
             yield return new WaitForSeconds(_roundTime );
+=======
+            yield return new WaitForSeconds(_roundTime);
+>>>>>>> VideoFix
 
 
             _logMessage.message = "round" + _roundCount.ToString() + " over";
@@ -161,7 +180,11 @@ public class DisplayControl : MonoBehaviour
         _dataManager.SaveLogMessage(_logMessage);
 
         PlayerPrefs.SetInt("GetData", 0);
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> VideoFix
     }
 
 
