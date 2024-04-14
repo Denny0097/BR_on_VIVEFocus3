@@ -772,13 +772,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _itemsScreen: {fileID: 1997670417}
   _videoScreen: {fileID: 1536832772}
-<<<<<<< HEAD
-  _intro1: {fileID: 691726099}
-  _intro2: {fileID: 0}
-=======
+
   _intro1: {fileID: 2062181786}
   _intro2: {fileID: 2144382499}
->>>>>>> VideoFix
+
   _roundTime: 30
   _roundNum: 5
   _roundCount: 1
@@ -802,8 +799,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< HEAD
-=======
+
 --- !u!1 &833553245
 GameObject:
   m_ObjectHideFlags: 0
@@ -906,7 +902,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
->>>>>>> VideoFix
+
 --- !u!1 &1013737053
 GameObject:
   m_ObjectHideFlags: 0
