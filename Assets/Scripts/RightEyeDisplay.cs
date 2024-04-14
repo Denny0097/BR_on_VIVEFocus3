@@ -10,27 +10,31 @@ public class RightEyeDisplay : MonoBehaviour
     public ItemChange _itemChange;
 
     private bool _invoked = false;
+    private bool _runned = false;
 
 
-    
+
+
     void Update()
     {
         //收到開始回合的訊號，右眼內容開始呈現
-        if (_displayControl._roundStart&&!_invoked)
+        if (_displayControl._roundStart && !_invoked)
         {
             _invoked = true;
+            _runned = true;
             m_Fade.gameObject.SetActive(true);
             InvokeRepeating("ExperimentPlay_Right", 0f, _displayControl._roundTime);
             InvokeRepeating("MakeFadeChange", 0f, _displayControl._roundTime / 2);
-            if (_displayControl._roundCount == _displayControl._roundNum)
-            {
-
-                m_Fade.gameObject.SetActive(false);
-
-            }
         }
 
-        
+        if (_displayControl._roundCount == _displayControl._roundNum && _runned)
+        {
+            _runned = false;
+            m_Fade.gameObject.SetActive(false);
+            _itemChange.Upper.texture = _itemChange.Items[8];
+            _itemChange.Lower.texture = _itemChange.Items[8];
+
+        }
     }
 
 
@@ -49,10 +53,14 @@ public class RightEyeDisplay : MonoBehaviour
     {
         if (m_Fade.isBlack)
         {
+            _displayControl._logMessage.message = "Fade in now";
+            _displayControl._dataManager.SaveLogMessage(_displayControl._logMessage);
             m_Fade.isBlack = false;
         }
         else
         {
+            _displayControl._logMessage.message = "Fade out now";
+            _displayControl._dataManager.SaveLogMessage(_displayControl._logMessage);
             m_Fade.isBlack = true;
         }
     }
@@ -60,7 +68,7 @@ public class RightEyeDisplay : MonoBehaviour
 
     private IEnumerator ExperimentPlay_RightCoroutine()
     {
-        _displayControl._roundCount++;
+        _displayControl._roundStart = false;
         _itemChange.ChangeImage();
 
         //m_Fade.FadeinhThenFadeout();

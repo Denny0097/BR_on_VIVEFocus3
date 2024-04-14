@@ -17,20 +17,22 @@ public class LogMessage
 
 public class DisplayControl : MonoBehaviour
 {
-   
+
     public GameObject _itemsScreen; //右眼畫面物件
     public GameObject _videoScreen; //左眼畫面物件
 
-    
-    public GameObject intro;//實驗介紹畫面
+
+    public GameObject _intro1;//實驗介紹畫面
+
+    public GameObject _intro2;
 
 
     public float _roundTime = 30; //實驗時間(from start to end per round)
 
-   
+
     public int _roundNum; //實驗回合總數設定
 
-    
+
     public int _roundCount = 1;//實驗當前回合
 
 
@@ -38,11 +40,8 @@ public class DisplayControl : MonoBehaviour
     public bool _gameStart = false;     //實驗是否開始了
     [HideInInspector]
     public bool _roundStart = false;    //實驗中每回合的tag，start指示回合開始、end指示回合結束
-    [HideInInspector]
-    public bool _roundEnd = false;    //實驗中每回合的tag，start指示回合開始、end指示回合結束
 
-
-
+    private bool _isRespond = false;
     //bool waitingforinput = false;
 
     //triger訊號紀錄
@@ -58,7 +57,7 @@ public class DisplayControl : MonoBehaviour
     /// </summary>
     void Start()
     {
-        
+        //GetComponent<AudioListener>().enabled = false;
     }
 
 
@@ -69,13 +68,14 @@ public class DisplayControl : MonoBehaviour
     {
         //按triger開始實驗
         //if (InputDeviceControl.KeyDown(InputDeviceControl.ControlDevice.Right, CommonUsages.triggerButton) && !_gameStart)
-        if (Input.anyKey &&!_gameStart)
+        if (Input.anyKey && !_gameStart)
         {
-            intro.SetActive(false);
+            _intro1.SetActive(false);
+            _intro2.SetActive(false);
 
             PlayerPrefs.SetInt("GetData", 1);//Take DataManager on
 
-            _logMessage.message = "Experiments start";
+            _logMessage.message = "Experiment start";
             _dataManager.SaveLogMessage(_logMessage);
 
 
@@ -89,10 +89,30 @@ public class DisplayControl : MonoBehaviour
             _videoScreen.SetActive(true);
 
             StartCoroutine(RunExperiment());
+            //After experiment, turn to initial 
+
+
         }
+
+        //受試者反應紀錄
+        if (InputDeviceControl.KeyDown(InputDeviceControl.ControlDevice.Right, CommonUsages.triggerButton) && !_isRespond)
+        {
+            _isRespond = true;
+            _logMessage.message = "round" + _roundCount.ToString() + " respond time";
+            _dataManager.SaveLogMessage(_logMessage);
+
+        }
+
         //暫停再按a重來
-        //
+        ///
+
+
+
     }
+
+
+
+
 
 
 
@@ -106,47 +126,43 @@ public class DisplayControl : MonoBehaviour
     /// <returns></returns>
     private IEnumerator RunExperiment()
     {
-        
+
         while (_roundCount <= _roundNum && _gameStart == true)
         {
-            //按a暫停
-            //
-            //if (InputDeviceControl.KeyDown(InputDeviceControl.ControlDevice.Right, WVR_InputId.))
-            //yield return StartCoroutine(WaitUntilInput());
+            _roundStart = true;
 
+            _isRespond = false;//每回合都設定獨立的反應按鈕
 
-            //自動繼續
-           
             _logMessage.message = "round" + _roundCount.ToString() + " start";
             _dataManager.SaveLogMessage(_logMessage);
 
 
-
-            _logMessage.message = "Fade in now";
-            _dataManager.SaveLogMessage(_logMessage);
-
-            yield return new WaitForSeconds(_roundTime/2);
+            //stall until item change and its mean next round is readying
+            yield return new WaitForSeconds(_roundTime);
 
 
-            _logMessage.message = "Fade out now";
-            _dataManager.SaveLogMessage(_logMessage);
-
-            yield return new WaitForSeconds(_roundTime / 2);
-
-
-
-            _logMessage.message = "round" + _roundCount.ToString() + " end";
+            _logMessage.message = "round" + _roundCount.ToString() + " over";
             _dataManager.SaveLogMessage(_logMessage);
 
 
             _roundCount++;
+
             if (_roundCount == _roundNum)
+            {
                 _gameStart = false;
+                _roundStart = false;
+                _roundCount = 1;
+                _intro1.SetActive(true);
+                _intro2.SetActive(true);
+            }
 
         }
 
+        _logMessage.message = "Experiment over";
+        _dataManager.SaveLogMessage(_logMessage);
+
         PlayerPrefs.SetInt("GetData", 0);
-        _videoScreen.SetActive(false);
+
     }
 
 

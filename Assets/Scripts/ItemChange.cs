@@ -11,7 +11,7 @@ public class ItemChange : MonoBehaviour
 
     //Up/Down image screen in right eye
     public RawImage Upper;
-    public RawImage Down;
+    public RawImage Lower;
 
     //是否更換圖片的依據
     [HideInInspector]
@@ -31,14 +31,14 @@ public class ItemChange : MonoBehaviour
     //    Items = Resources.LoadAll<Texture>(resourcesFolderPath);
     //}
 
-   
+
     //Change two image
     public void ChangeImage()
     {
         randomImage = GetRandomImage();
         Upper.texture = randomImage;
         randomImage = GetRandomImage();
-        Down.texture = randomImage;
+        Lower.texture = randomImage;
     }
 
 
@@ -49,7 +49,7 @@ public class ItemChange : MonoBehaviour
         int randomIndex;
         do
         {
-            randomIndex = Random.Range(0, Items.Length);
+            randomIndex = Random.Range(0, Items.Length - 1);
         }
         while (randomIndex == HadChoosen);
 
