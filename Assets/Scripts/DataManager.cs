@@ -29,7 +29,7 @@ public class DataManager : MonoBehaviour
     {
         string datajson = JsonConvert.SerializeObject(new LabDataWrapper { data = data }, new JsonSerializerSettings()
         {
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore, // §ï ignore Á×§K´`Àô¤Þ¥Î (Force ·|ª½±µ°{°h¤£³ø¿ù)
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore, // ï¿½ï¿½ ignore ï¿½×§Kï¿½`ï¿½ï¿½Þ¥ï¿½ (Force ï¿½|ï¿½ï¿½ï¿½ï¿½ï¿½{ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
             NullValueHandling = NullValueHandling.Include
         });
         File.AppendAllText(Path.Combine(_saveDir, $"EyeTrackExperiment_EyeData.json"), datajson + "\r\n");
@@ -39,10 +39,32 @@ public class DataManager : MonoBehaviour
     {
         string datajson = JsonConvert.SerializeObject(new LabDataWrapper { data = data }, new JsonSerializerSettings()
         {
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore, // §ï ignore Á×§K´`Àô¤Þ¥Î (Force ·|ª½±µ°{°h¤£³ø¿ù)
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore, // ï¿½ï¿½ ignore ï¿½×§Kï¿½`ï¿½ï¿½Þ¥ï¿½ (Force ï¿½|ï¿½ï¿½ï¿½ï¿½ï¿½{ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
             NullValueHandling = NullValueHandling.Include
         });
         File.AppendAllText(Path.Combine(_saveDir, $"EyeTrackExperiment_LogMessage.json"), datajson + "\r\n");
+    }
+
+    public void SaveFPS(LogMessage data)
+    {
+        string datajson = JsonConvert.SerializeObject(new LabDataWrapper { data = data }, new JsonSerializerSettings()
+        {
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore, // ï¿½ï¿½ ignore ï¿½×§Kï¿½`ï¿½ï¿½Þ¥ï¿½ (Force ï¿½|ï¿½ï¿½ï¿½ï¿½ï¿½{ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
+            NullValueHandling = NullValueHandling.Include
+        });
+        File.AppendAllText(Path.Combine(_saveDir, $"FPS_LogMessage.json"), datajson + "\r\n");
+
+    }
+
+    public void SaveFadeRate(LogMessage data)
+    {
+        string datajson = JsonConvert.SerializeObject(new LabDataWrapper { data = data }, new JsonSerializerSettings()
+        {
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore, // ï¿½ï¿½ ignore ï¿½×§Kï¿½`ï¿½ï¿½Þ¥ï¿½ (Force ï¿½|ï¿½ï¿½ï¿½ï¿½ï¿½{ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
+            NullValueHandling = NullValueHandling.Include
+        });
+        File.AppendAllText(Path.Combine(_saveDir, $"Fade_LogMessage.json"), datajson + "\r\n");
+
     }
 
     // Start is called before the first frame update

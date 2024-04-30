@@ -22,8 +22,38 @@
         },
         {
             "deviceId": "FA38H2R00127",
-            "name": "com.DefaultCompany.Eyetrack_3D",
-            "processId": 8663,
+            "name": "com.DefaultCompany.BR_onVR",
+            "processId": 5154,
+            "exited": true
+        },
+        {
+            "deviceId": "FA38H2R00127",
+            "name": "com.htc.vrs.launcher",
+            "processId": 2475,
+            "exited": true
+        },
+        {
+            "deviceId": "FA38H2R00127",
+            "name": "com.vive.android.secondaryhome",
+            "processId": 3002,
+            "exited": false
+        },
+        {
+            "deviceId": "FA38H2R00127",
+            "name": "com.DefaultCompany.BR_onVR",
+            "processId": 3198,
+            "exited": true
+        },
+        {
+            "deviceId": "FA38H2R00127",
+            "name": "com.DefaultCompany.BR_onVR",
+            "processId": 6297,
+            "exited": true
+        },
+        {
+            "deviceId": "FA38H2R00127",
+            "name": "com.htc.vrs.launcher",
+            "processId": 2514,
             "exited": false
         }
     ],

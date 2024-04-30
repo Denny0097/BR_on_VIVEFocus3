@@ -11,7 +11,7 @@ public class FadeInOut : MonoBehaviour
     public DisplayControl _displayControl;
 
     [HideInInspector]
-    public bool isBlack = false;//不透明狀態
+    //public bool isBlack = false;//不透明狀態
 
     public float _fadeSpeed = 0.07f;//透明度變化速率
     public RawImage rawImage;
@@ -30,18 +30,21 @@ public class FadeInOut : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
-    {
-        if (isBlack)
-        {
-            Fadein();
-        }
-        else
-        {
-            Fadeout();
-        }
-    }
+    //void Update()
+    //{
+    //    if (isBlack && rawImage.color.a != 0)
+    //    {
 
+    //        Fadein();
+    //    }
+    //    else if(!isBlack && rawImage.color.a != 100)
+    //    {
+
+    //        Fadeout();
+    //    }
+    //}
+
+    //Cover越來越深，畫面越來越模糊
     public void Fadein()
     {
 
@@ -51,7 +54,8 @@ public class FadeInOut : MonoBehaviour
         rawImage.color = newColor;
 
     }
-
+ 
+    //Cover越來越淺，畫面越來越清楚
     public void Fadeout()
     {
 

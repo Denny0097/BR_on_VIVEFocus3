@@ -25,16 +25,22 @@ public class ItemChange : MonoBehaviour
 
     Texture randomImage;
 
+
     //void LoadImages()
     //{
     //    // 從Resources文件夾中加載所有Sprite
     //    Items = Resources.LoadAll<Texture>(resourcesFolderPath);
     //}
-
+    private void Start()
+    {
+        Upper.gameObject.SetActive(true);
+        Lower.gameObject.SetActive(true);
+    }
 
     //Change two image
     public void ChangeImage()
     {
+        Debug.Log("Change items");
         randomImage = GetRandomImage();
         Upper.texture = randomImage;
         randomImage = GetRandomImage();
@@ -58,4 +64,7 @@ public class ItemChange : MonoBehaviour
         HadChoosen = randomIndex;
         return Items[randomIndex];
     }
+
+
+    
 }
