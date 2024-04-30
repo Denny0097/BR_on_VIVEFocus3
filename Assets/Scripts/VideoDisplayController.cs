@@ -2,17 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
-public class ItemChange : MonoBehaviour
+public class VideoDisplayController : MonoBehaviour
 {
-
-    //Image origin path
-    //public string resourcesFolderPath;
-
-    //Up/Down image screen in right eye
-    public RawImage Upper;
-    public RawImage Lower;
-
+   
+    public RawImage _video;
+    public DisplayControl _displayControl;
     //是否更換圖片的依據
     [HideInInspector]
     public bool Change = false;
@@ -26,27 +22,43 @@ public class ItemChange : MonoBehaviour
     Texture randomImage;
 
 
-    //void LoadImages()
-    //{
-    //    // 從Resources文件夾中加載所有Sprite
-    //    Items = Resources.LoadAll<Texture>(resourcesFolderPath);
-    //}
+    //定時更新圖片用
+    float deltaTime = 0f;
+    float showTime = 0.1f;
+
     private void Start()
     {
-        Upper.gameObject.SetActive(true);
-        Lower.gameObject.SetActive(true);
+        //初始時關閉動畫物件，呼叫此物件時順便打開動畫物件
+        _video.gameObject.SetActive(true);
+        
     }
 
-    //Change two image
+
+
+    void Update()
+    {
+        //每0.1秒更新圖片
+        deltaTime += Time.deltaTime;
+        if (deltaTime >= showTime)
+        {
+            ChangeImage();
+            deltaTime = 0f;
+        }
+
+            // 收到結束訊號後停止右眼實驗畫面的顯示
+        if (!_displayControl._gameStart)
+        {
+            _video.gameObject.SetActive(false);
+
+        }
+    }
+
     public void ChangeImage()
     {
         Debug.Log("Change items");
         randomImage = GetRandomImage();
-        Upper.texture = randomImage;
-        randomImage = GetRandomImage();
-        Lower.texture = randomImage;
+        _video.texture = randomImage;
     }
-
 
     Texture GetRandomImage()
     {
@@ -62,7 +74,4 @@ public class ItemChange : MonoBehaviour
         HadChoosen = randomIndex;
         return Items[randomIndex];
     }
-
-
-    
 }
