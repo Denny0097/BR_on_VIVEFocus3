@@ -1,9 +1,9 @@
 {
     "m_SelectedDeviceId": "FA38H2R00127",
     "m_SelectedPackage": {
-        "deviceId": "",
-        "name": "",
-        "processId": 0,
+        "deviceId": "FA38H2R00127",
+        "name": "com.DefaultCompany.PresentFile_Controller",
+        "processId": 13867,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -54,6 +54,12 @@
             "deviceId": "FA38H2R00127",
             "name": "com.htc.vrs.launcher",
             "processId": 2514,
+            "exited": false
+        },
+        {
+            "deviceId": "FA38H2R00127",
+            "name": "com.DefaultCompany.PresentFile_Controller",
+            "processId": 13867,
             "exited": false
         }
     ],

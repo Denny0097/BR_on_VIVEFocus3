@@ -29,7 +29,9 @@ public class DisplayControl : MonoBehaviour
     public RawImage _video;
 
 
-    
+    public GameObject _presentScreen;//展示用畫面物件,only for 展示用(為了顯示兩畫面)
+
+
     public GameObject _intro1;//實驗介紹畫面
 
     public GameObject _intro2;//為了演示雙畫面，用在unity display2
@@ -85,7 +87,8 @@ public class DisplayControl : MonoBehaviour
 
     //測試亮度用
     public GameObject _testBright;
-
+    //present用
+    public GameObject _presentModeCanvas;
 
 
     //Controller
@@ -192,6 +195,10 @@ public class DisplayControl : MonoBehaviour
                 _videoScreen.SetActive(false);
                 _video.gameObject.SetActive(false);
 
+                _presentScreen.SetActive(false);//only for 展示用(為了顯示兩畫面)
+                _presentModeCanvas.SetActive(false); //..
+
+
                 _rightHandContr.SetActive(true);
                 _leftHandContr.SetActive(true);
                 _intereactionMan.SetActive(true);
@@ -281,6 +288,40 @@ public class DisplayControl : MonoBehaviour
         _testBright.SetActive(true);
     }
 
+
+    public void PresentMode()
+    {
+        _roundNum = int.Parse(_inputQuizNum.text);
+        _roundTime = int.Parse(_inputRoundTime.text);
+
+        //ThreadStart childref = new ThreadStart(CallToChildThread);
+        _intro1.SetActive(false);
+        //intro2.SetActive(false);
+        _presentModeCanvas.SetActive(true);
+
+
+        //controller disappear
+        _rightHandContr.SetActive(false);
+        _leftHandContr.SetActive(false);
+        _intereactionMan.SetActive(false);
+
+        PlayerPrefs.SetInt("GetData", 1);//Take DataManager on
+
+        _logMessage.message = "Presently experiment start";
+        _dataManager.SaveLogMessage(_logMessage);
+
+
+        _gameStart = true;
+
+        //_roundStart = true;
+
+        _newRound = true;
+        _presentScreen.SetActive(true);
+
+
+        StartCoroutine(RunExperiment());
+        //After experiment, turn to initial 
+    }
 
 
     //time threads to avoid delay

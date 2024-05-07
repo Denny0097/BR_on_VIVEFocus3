@@ -20,7 +20,7 @@ public class ItemDisplayController : MonoBehaviour
     /// </summary>
 
     public DisplayControl _displayControl;
-    public FadeInOut m_Fade;
+    
     public ItemChange _itemChange;
 
     //private bool _invoked = false;

@@ -29,4 +29,5 @@ public class CameraChange : MonoBehaviour
             _rightEye.cullingMask = (1 << 0) + (1 << 5) + (1 << 7);
         }
     }
+    
 }
