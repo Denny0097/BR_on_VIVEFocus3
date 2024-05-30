@@ -26,4 +26,20 @@ public class Conclusion : MonoBehaviour
 
     }
 
+    public void AddTen()
+    {
+        int rawNumber = int.Parse(_inputfield.text);
+        rawNumber += 10;
+        _inputfield.text = rawNumber.ToString();
+    }
+
+    public void MinusTen()
+    {
+
+        int rawNumber = int.Parse(_inputfield.text);
+        if (rawNumber > 0)
+            rawNumber -= 10;
+        _inputfield.text = rawNumber.ToString();
+
+    }
 }

@@ -14,6 +14,8 @@ using System.Threading;
 public class LogMessage
 {
     public string message;
+    public string FPS;
+    public string Time;
 }
 
 
@@ -101,7 +103,7 @@ public class DisplayControl : MonoBehaviour
     /// </summary>
     void Start()
     {
-        //GameStart();
+        GameStart();
 
         //測試用
         //TestStart();
@@ -196,14 +198,14 @@ public class DisplayControl : MonoBehaviour
                 _video.gameObject.SetActive(false);
 
                 _presentScreen.SetActive(false);//only for 展示用(為了顯示兩畫面)
-                _presentModeCanvas.SetActive(false); //..
+            //    _presentModeCanvas.SetActive(false); //..
 
 
                 _rightHandContr.SetActive(true);
                 _leftHandContr.SetActive(true);
                 _intereactionMan.SetActive(true);
                 _intro1.SetActive(true);
-                _intro2.SetActive(true);
+            //   _intro2.SetActive(true);
                 break;
             }
 

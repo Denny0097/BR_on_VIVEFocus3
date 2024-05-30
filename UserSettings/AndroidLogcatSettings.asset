@@ -2,8 +2,8 @@
     "m_SelectedDeviceId": "FA38H2R00127",
     "m_SelectedPackage": {
         "deviceId": "FA38H2R00127",
-        "name": "com.DefaultCompany.PresentFile_Controller",
-        "processId": 13867,
+        "name": "com.DefaultCompany.Test",
+        "processId": 9112,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -60,6 +60,72 @@
             "deviceId": "FA38H2R00127",
             "name": "com.DefaultCompany.PresentFile_Controller",
             "processId": 13867,
+            "exited": false
+        },
+        {
+            "deviceId": "FA38H2R00127",
+            "name": "com.DefaultCompany.Test",
+            "processId": 7274,
+            "exited": false
+        },
+        {
+            "deviceId": "FA38H2R00127",
+            "name": "com.DefaultCompany.Test",
+            "processId": 16773,
+            "exited": false
+        },
+        {
+            "deviceId": "FA38H2R00127",
+            "name": "com.DefaultCompany.Test",
+            "processId": 17316,
+            "exited": false
+        },
+        {
+            "deviceId": "FA38H2R00127",
+            "name": "com.DefaultCompany.Test",
+            "processId": 17920,
+            "exited": false
+        },
+        {
+            "deviceId": "FA38H2R00127",
+            "name": "com.DefaultCompany.Test",
+            "processId": 18785,
+            "exited": false
+        },
+        {
+            "deviceId": "FA38H2R00127",
+            "name": "com.DefaultCompany.Test",
+            "processId": 19333,
+            "exited": false
+        },
+        {
+            "deviceId": "FA38H2R00127",
+            "name": "com.DefaultCompany.Test",
+            "processId": 19939,
+            "exited": false
+        },
+        {
+            "deviceId": "FA38H2R00127",
+            "name": "com.DefaultCompany.Test",
+            "processId": 6352,
+            "exited": false
+        },
+        {
+            "deviceId": "FA38H2R00127",
+            "name": "com.DefaultCompany.Test",
+            "processId": 7102,
+            "exited": false
+        },
+        {
+            "deviceId": "FA38H2R00127",
+            "name": "com.DefaultCompany.Test",
+            "processId": 8215,
+            "exited": false
+        },
+        {
+            "deviceId": "FA38H2R00127",
+            "name": "com.DefaultCompany.Test",
+            "processId": 9112,
             "exited": false
         }
     ],

@@ -40,12 +40,22 @@ public class TestBright : MonoBehaviour
                 // 切換畫面
                 if (_image.texture == Items[0])
                 {
+                    //紀錄時切換黑白的時間
+                    _displayControl._logMessage.Time = "Change to black";
+                    _displayControl._dataManager.SaveTestTag(_displayControl._logMessage, flashTime.ToString());
+
+                    //Black turn
                     _image.texture = Items[1];
                     deltaTime = 0;
                     _count += 1;
                 }
                 else
                 {
+                    //紀錄時切換黑白的時間
+                    _displayControl._logMessage.Time = "Change to white";
+                    _displayControl._dataManager.SaveTestTag(_displayControl._logMessage, flashTime.ToString());
+
+                    //White turn
                     _image.texture = Items[0];
                     deltaTime = flashTime;
                     _count += 1;
