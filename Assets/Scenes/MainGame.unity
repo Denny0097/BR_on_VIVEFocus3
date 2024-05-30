@@ -7699,7 +7699,6 @@ MonoBehaviour:
   Change: 0
   Items: []
   _flashFrequence: {fileID: 0}
-  showTime: 0.1
 --- !u!114 &1023317251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10871,7 +10870,6 @@ MonoBehaviour:
   Change: 0
   Items: []
   _flashFrequence: {fileID: 190076584}
-  showTime: 0.1
 --- !u!4 &1536832774
 Transform:
   m_ObjectHideFlags: 0
@@ -11525,15 +11523,7 @@ MonoBehaviour:
   Upper: {fileID: 206099295}
   Lower: {fileID: 1244705705}
   Change: 0
-  Items:
-  - {fileID: 2800000, guid: b8fd18c53e4614a22a6bf8fedd13d059, type: 3}
-  - {fileID: 2800000, guid: 5c92ce6bfa4134383888a17b8c089b1a, type: 3}
-  - {fileID: 2800000, guid: 61c10ae71710d4292a7f9dba69f23033, type: 3}
-  - {fileID: 2800000, guid: 858c18114f65b41458427462fde30d8d, type: 3}
-  - {fileID: 2800000, guid: 96f4695386c394189b7c8374b49f07f9, type: 3}
-  - {fileID: 2800000, guid: a01cd0ea168654b92959f7af8a17a036, type: 3}
-  - {fileID: 2800000, guid: 338ba1c230c3d41aa866bc2065a8e80f, type: 3}
-  - {fileID: 2800000, guid: 8e6c1fae9e82e4658b2ebb840713697f, type: 3}
+  Items: []
 --- !u!4 &1614310882
 Transform:
   m_ObjectHideFlags: 0

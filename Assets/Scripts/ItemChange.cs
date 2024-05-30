@@ -21,8 +21,8 @@ public class ItemChange : MonoBehaviour
 
     //for avoid same image in two screen
     private int HadChoosen;
-
-
+    private string imagesFolderPath = Path.Combine(Application.persistentDataPath, "Image", "Items")
+   
     Texture randomImage;
 
 
@@ -33,9 +33,41 @@ public class ItemChange : MonoBehaviour
     //}
     private void Start()
     {
+        LoadImagesFromFolder(imagesFolderPath);
         Upper.gameObject.SetActive(true);
         Lower.gameObject.SetActive(true);
     }
+
+
+
+    private void LoadImagesFromFolder(string folderPath)
+    {
+        string[] imageTypes = { "*.BMP", "*.JPG", "*.GIF", "*.PNG" };
+        List<Texture> texturesList = new List<Texture>();
+
+        if (Directory.Exists(folderPath))
+        {
+            foreach (string imageType in imageTypes)
+            {
+                string[] filePaths = Directory.GetFiles(folderPath, imageType);
+
+                foreach (string filePath in filePaths)
+                {
+                    byte[] fileData = File.ReadAllBytes(filePath);
+                    Texture2D texture = new Texture2D(2, 2);
+                    texture.LoadImage(fileData);
+                    texturesList.Add(texture);
+                }
+            }
+
+            Items = texturesList.ToArray();
+        }
+        else
+        {
+            Debug.LogError("Folder path does not exist: " + folderPath);
+        }
+    }
+
 
     //Change two image
     public void ChangeImage()
