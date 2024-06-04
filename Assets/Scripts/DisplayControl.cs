@@ -103,7 +103,7 @@ public class DisplayControl : MonoBehaviour
     /// </summary>
     void Start()
     {
-        GameStart();
+        //GameStart();
 
         //測試用
         //TestStart();
@@ -156,7 +156,7 @@ public class DisplayControl : MonoBehaviour
             }
 
             //紀錄幀數
-            CountFPS();
+//            CountFPS();
 
 
         }
@@ -352,21 +352,21 @@ public class DisplayControl : MonoBehaviour
     }
 
     //計算幀數
-    public void CountFPS()
-    {
-        count++;
-        deltaTime += Time.deltaTime;
-        if (deltaTime >= showTime)
-        {
+    //public void CountFPS()
+    //{
+      //  count++;
+      //  deltaTime += Time.deltaTime;
+      //  if (deltaTime >= showTime)
+      //  {
             
-            float milliSecond = deltaTime * 1000 / count;;
+      //      float milliSecond = deltaTime * 1000 / count;;
 
-            _logMessage.message = ""+milliSecond.ToString();
-            _dataManager.SaveFPS(_logMessage);
+      //      _logMessage.message = ""+milliSecond.ToString();
+      //      _dataManager.SaveFPS(_logMessage);
 
-            count = 0;
-            deltaTime = 0f;
-        }
-    }
-
+      //      count = 0;
+      //      deltaTime = 0f;
+      //  }
+     //}
+//
 }

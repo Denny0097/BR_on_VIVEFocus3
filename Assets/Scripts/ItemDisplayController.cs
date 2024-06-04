@@ -43,7 +43,7 @@ public class ItemDisplayController : MonoBehaviour
 
     void Update()
     {
-        CountFadeRate();
+        //CountFadeRate();
         if (_displayControl._gameStart)
         {
             //收到開始回合的訊號，右眼內容開始呈現
@@ -139,13 +139,16 @@ public class ItemDisplayController : MonoBehaviour
         yield return null;
     }
 
-    public void CountFadeRate()
-    {
+
+    //public void CountFadeRate()
+    //{
         
-        _displayControl._logMessage.message = ""+rawImage.color.a.ToString();
-        _displayControl._dataManager.SaveFadeRate(_displayControl._logMessage);
+      //  _displayControl._logMessage.FadeRate = ""+rawImage.color.a.ToString();
+      //  _displayControl._dataManager.SaveFadeRate(_displayControl._logMessage);
 
         
-    }
+//    }
+
+
 
 }

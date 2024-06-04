@@ -45,38 +45,38 @@ public class DataManager : MonoBehaviour
         File.AppendAllText(Path.Combine(_saveDir, $"EyeTrackExperiment_LogMessage.json"), datajson + "\r\n");
     }
 
-    public void SaveFPS(LogMessage data)
-    {
-        string datajson = JsonConvert.SerializeObject(new LabDataWrapper { data = data }, new JsonSerializerSettings()
-        {
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore, // �� ignore �קK�`��ޥ� (Force �|�����{�h������)
-            NullValueHandling = NullValueHandling.Include
-        });
-        File.AppendAllText(Path.Combine(_saveDir, $"FPS_LogMessage.json"), datajson + "\r\n");
+    //public void SaveFPS(LogMessage data)
+    //{
+    //    string datajson = JsonConvert.SerializeObject(new LabDataWrapper { data = data }, new JsonSerializerSettings()
+    //    {
+    //        ReferenceLoopHandling = ReferenceLoopHandling.Ignore, // �� ignore �קK�`��ޥ� (Force �|�����{�h������)
+    //        NullValueHandling = NullValueHandling.Include
+    //    });
+    //    File.AppendAllText(Path.Combine(_saveDir, $"FPS_LogMessage.json"), datajson + "\r\n");
 
-    }
+    //}
 
-    public void SaveFadeRate(LogMessage data)
-    {
-        string datajson = JsonConvert.SerializeObject(new LabDataWrapper { data = data }, new JsonSerializerSettings()
-        {
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore, // �� ignore �קK�`��ޥ� (Force �|�����{�h������)
-            NullValueHandling = NullValueHandling.Include
-        });
-        File.AppendAllText(Path.Combine(_saveDir, $"Fade_LogMessage.json"), datajson + "\r\n");
+    //public void SaveFadeRate(LogMessage data)
+    //{
+    //    string datajson = JsonConvert.SerializeObject(new LabDataWrapper { data = data }, new JsonSerializerSettings()
+    //    {
+    //        ReferenceLoopHandling = ReferenceLoopHandling.Ignore, // �� ignore �קK�`��ޥ� (Force �|�����{�h������)
+    //        NullValueHandling = NullValueHandling.Include
+    //    });
+    //    File.AppendAllText(Path.Combine(_saveDir, $"Fade_LogMessage.json"), datajson + "\r\n");
 
-    }
+    //}
 
-    public void SaveTestTag(LogMessage data, String FlashTimeSet)
-    {
-        string datajson = JsonConvert.SerializeObject(new LabDataWrapper { data = data }, new JsonSerializerSettings()
-        {
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore, // �� ignore �קK�`��ޥ� (Force �|�����{�h������)
-            NullValueHandling = NullValueHandling.Include
-        });
-        File.AppendAllText(Path.Combine(FlashTimeSet, _saveDir, $"Fade_LogMessage.json"), datajson + "\r\n");
+    //public void SaveTestTag(LogMessage data, String FlashTimeSet)
+    //{
+    //    string datajson = JsonConvert.SerializeObject(new LabDataWrapper { data = data }, new JsonSerializerSettings()
+    //    {
+    //        ReferenceLoopHandling = ReferenceLoopHandling.Ignore, // �� ignore �קK�`��ޥ� (Force �|�����{�h������)
+    //        NullValueHandling = NullValueHandling.Include
+    //    });
+    //    File.AppendAllText(Path.Combine(FlashTimeSet, _saveDir, $"Fade_LogMessage.json"), datajson + "\r\n");
 
-    }
+    //}
 
     // Start is called before the first frame update
     void Start()

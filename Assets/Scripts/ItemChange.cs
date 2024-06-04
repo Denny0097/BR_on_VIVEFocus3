@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,8 +22,9 @@ public class ItemChange : MonoBehaviour
 
     //for avoid same image in two screen
     private int HadChoosen;
-    private string imagesFolderPath = Path.Combine(Application.persistentDataPath, "Image", "Items")
-   
+    private string imagesFolderPath = Path.Combine(Application.persistentDataPath, "Image", "Items");
+    //private string imagesFolderPath = "Assets/Resources/Image/Items";
+
     Texture randomImage;
 
 

@@ -42,7 +42,7 @@ public class TestBright : MonoBehaviour
                 {
                     //紀錄時切換黑白的時間
                     _displayControl._logMessage.Time = "Change to black";
-                    _displayControl._dataManager.SaveTestTag(_displayControl._logMessage, flashTime.ToString());
+//                    _displayControl._dataManager.SaveTestTag(_displayControl._logMessage, flashTime.ToString());
 
                     //Black turn
                     _image.texture = Items[1];
@@ -53,7 +53,7 @@ public class TestBright : MonoBehaviour
                 {
                     //紀錄時切換黑白的時間
                     _displayControl._logMessage.Time = "Change to white";
-                    _displayControl._dataManager.SaveTestTag(_displayControl._logMessage, flashTime.ToString());
+ //                   _displayControl._dataManager.SaveTestTag(_displayControl._logMessage, flashTime.ToString());
 
                     //White turn
                     _image.texture = Items[0];
