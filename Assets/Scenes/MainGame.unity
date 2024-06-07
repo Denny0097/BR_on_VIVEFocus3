@@ -5803,11 +5803,10 @@ MonoBehaviour:
   Lower: {fileID: 1244705705}
   _videoScreen: {fileID: 1536832772}
   _video: {fileID: 518233530}
-  _presentScreen: {fileID: 1023317248}
   _intro1: {fileID: 520270153}
   _intro2: {fileID: 0}
-  _restInstruct: {fileID: 0}
-  _restTexture: {fileID: 0}
+  _restInstruct: {fileID: 2100894925}
+  _restTexture: {fileID: 1120054330}
   _roundTime: 30
   _roundNum: 5
   _roundCount: 1
@@ -5819,9 +5818,7 @@ MonoBehaviour:
   _inputQuizNum: {fileID: 967136666}
   _inputRoundTime: {fileID: 1348281050}
   _respoundBi: {fileID: 312456524}
-  showTime: 1
   _testBright: {fileID: 345379277}
-  _presentModeCanvas: {fileID: 0}
   _rightHandContr: {fileID: 901670076}
   _leftHandContr: {fileID: 2116918390}
   _intereactionMan: {fileID: 709845511}
@@ -14125,6 +14122,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2078814586}
   m_CullTransparentMesh: 1
+--- !u!114 &2100894925 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4530322579891676984, guid: b283ecead41b1465694be391fc18537a, type: 3}
+  m_PrefabInstance: {fileID: 804234823}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2116918390
 GameObject:
   m_ObjectHideFlags: 0

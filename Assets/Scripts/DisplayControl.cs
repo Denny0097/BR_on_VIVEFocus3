@@ -29,17 +29,22 @@ public class DisplayControl : MonoBehaviour
     public RawImage _video;
 
 
-    public GameObject _presentScreen;//展示用畫面物件,only for 展示用(為了顯示兩畫面)
-
 
     public GameObject _intro1;//實驗介紹畫面
     public GameObject _intro2;//為了演示雙畫面，用在unity display2
     public Text _restInstruct;
     public RawImage _restTexture;
 
+    [HideInInspector]
     public float _roundTime = 30; //實驗時間(from start to end per round)
+
+    [HideInInspector]
     public int _roundNum; //實驗回合總數設定
+
+    [HideInInspector]
     public int _roundCount = 1;//實驗當前回合
+
+    [HideInInspector]
     public bool _newRound = true;    //fade out 反應後開始new round
 
     [HideInInspector]
@@ -48,20 +53,19 @@ public class DisplayControl : MonoBehaviour
     [HideInInspector]
     public bool _gameStop = false;      //實驗是否暫停
 
-    [HideInInspector]
-    //public bool _roundStart = false;    //實驗中每回合的tag，start指示回合開始、end指示回合結束
-
+    
     private bool _startFadein = false;
     private bool _isRespondF = false;//Fadein階段的反應
 
     private bool _startFadeout = false;
     private bool _isRespondB = false;//Fadeawat階段的反應
 
+    [HideInInspector]
     public bool _makeFadeModeChange = false;//true使fade mode change
-    //bool waitingforinput = false;
+    
 
-    //triger訊號紀錄
-    public DataManager _dataManager;
+    
+    public DataManager _dataManager;//triger訊號紀錄
 
     //訊號類別實例
     public LogMessage _logMessage = new LogMessage();
@@ -72,16 +76,16 @@ public class DisplayControl : MonoBehaviour
     //反應後逼聲
     public AudioSource _respoundBi;
 
-    //幀數變數
-    public float showTime = 1f;
+    ////幀數變數
+    //public float showTime = 1f;
 
-    private int count = 0;
-    private float deltaTime = 0f;
+    //private int count = 0;
+    //private float deltaTime = 0f;
 
-    //測試亮度用
+    ////測試亮度用
     public GameObject _testBright;
-    //present用
-    public GameObject _presentModeCanvas;
+    ////present用
+    //public GameObject _presentModeCanvas;
 
     //Controller
     public GameObject _rightHandContr;
@@ -186,9 +190,6 @@ public class DisplayControl : MonoBehaviour
 
                 _videoScreen.SetActive(false);
                 _video.gameObject.SetActive(false);
-
-                _presentScreen.SetActive(false);//only for 展示用(為了顯示兩畫面)
-            //   _presentModeCanvas.SetActive(false); //..
 
 
                 _rightHandContr.SetActive(true);
@@ -315,43 +316,6 @@ public class DisplayControl : MonoBehaviour
 
     }
 
-
-    public void PresentMode()
-    {
-        _roundNum = int.Parse(_inputQuizNum.text);
-        _roundTime = int.Parse(_inputRoundTime.text);
-
-        //ThreadStart childref = new ThreadStart(CallToChildThread);
-        _intro1.SetActive(false);
-        //intro2.SetActive(false);
-        _presentModeCanvas.SetActive(true);
-
-
-        //controller disappear
-        _rightHandContr.SetActive(false);
-        _leftHandContr.SetActive(false);
-        _intereactionMan.SetActive(false);
-
-        PlayerPrefs.SetInt("GetData", 1);//Take DataManager on
-
-        _logMessage.message = "Presently experiment start";
-        _dataManager.SaveLogMessage(_logMessage);
-
-
-        _gameStart = true;
-
-        //_roundStart = true;
-
-        _newRound = true;
-        _presentScreen.SetActive(true);
-
-
-        StartCoroutine(RunExperiment());
-        //After experiment, turn to initial 
-    }
-
-
-   
     public static IEnumerator WaitForSeconds(float time)
     {
         float start = Time.realtimeSinceStartup;
