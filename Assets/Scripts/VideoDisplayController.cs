@@ -24,7 +24,7 @@ public class VideoDisplayController : MonoBehaviour
     private void Start()
     {
         _video.gameObject.SetActive(true);
-        showTime = 1/float.Parse(_flashFrequence.text);
+        showTime = 1 / float.Parse(_flashFrequence.text);
         LoadImagesFromFolder(imagesFolderPath);
 
         if (Items == null || Items.Length == 0)
@@ -99,7 +99,7 @@ public class VideoDisplayController : MonoBehaviour
         int randomIndex;
         do
         {
-            randomIndex = Random.Range(0, Items.Length-1);
+            randomIndex = Random.Range(0, Items.Length);
         }
         while (randomIndex == HadChoosen);
 

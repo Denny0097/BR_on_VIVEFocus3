@@ -3,27 +3,39 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ItemChange : MonoBehaviour
 {
 
-    //Image origin path
-    //public string resourcesFolderPath;
 
-    //Up/Down image screen in right eye
-    public RawImage Upper;
-    public RawImage Lower;
+    //images[0]: LeftUpper, images[1]:RightUpper, images[2]:LeftLow, images[3]:RightLow
+    public RawImage[] _images;
+
+    public RawImage _central;
+
+    public int FamiLocation;
 
     //是否更換圖片的依據
     [HideInInspector]
     public bool Change = false;
     //Image resources
-    public Texture[] Items;
+    public Texture[] familiarItems;
+    public Texture[] unfamiliarItems;
 
     //for avoid same image in two screen
     private int HadChoosen;
-    private string imagesFolderPath = Path.Combine(Application.persistentDataPath, "Image", "Items");
-    //private string imagesFolderPath = "Assets/Resources/Image/Items";
+    private string familiarImagesFolderPath = Path.Combine(Application.persistentDataPath, "Image", "FamiliarItems");
+    private string unfamiliarItemsImagesFolderPath= Path.Combine(Application.persistentDataPath, "Image", "UnfamiliarItems");
+
+    //private string familiarImagesFolderPath = "Assets/Resources/Image/Items";
+    //private string unfamiliarItemsImagesFolderPath = "Assets/Resources/Image/Items";
+
+
+    //決定物品數量
+    public TMP_InputField _locationNum;
+
+
 
     Texture randomImage;
 
@@ -35,14 +47,27 @@ public class ItemChange : MonoBehaviour
     //}
     private void Start()
     {
-        LoadImagesFromFolder(imagesFolderPath);
-        Upper.gameObject.SetActive(true);
-        Lower.gameObject.SetActive(true);
+        LoadImagesFromFolder(familiarImagesFolderPath, ref familiarItems);
+        LoadImagesFromFolder(unfamiliarItemsImagesFolderPath, ref unfamiliarItems);
+
+        //決定題數
+        if(int.Parse(_locationNum.text) == 1)
+        {
+            _central.gameObject.SetActive(true);
+        }
+        else
+        {
+            for(int i = 0; i < 4; i++)
+            {
+                _images[i].gameObject.SetActive(true);
+            }
+        }
+        
     }
 
 
 
-    private void LoadImagesFromFolder(string folderPath)
+    private void LoadImagesFromFolder(string folderPath, ref Texture[] Items)
     {
         string[] imageTypes = { "*.BMP", "*.JPG", "*.GIF", "*.PNG" };
         List<Texture> texturesList = new List<Texture>();
@@ -74,15 +99,17 @@ public class ItemChange : MonoBehaviour
     //Change two image
     public void ChangeImage()
     {
-        Debug.Log("Change items");
-        randomImage = GetRandomImage();
-        Upper.texture = randomImage;
-        randomImage = GetRandomImage();
-        Lower.texture = randomImage;
+        if (int.Parse(_locationNum.text) == 1)
+
+            RandomFold_One();
+        
+        else
+
+            RandomFold_Four();
     }
 
 
-    Texture GetRandomImage()
+    Texture GetRandomImage(Texture[] Items)
     {
         // 用do while避免同張圖同時顯示
         // 從Sprites數組中隨機選擇一個Sprite
@@ -90,7 +117,7 @@ public class ItemChange : MonoBehaviour
         do
         {
 
-            randomIndex = Random.Range(0, Items.Length-1);
+            randomIndex = Random.Range(0, Items.Length);
 
         }
         while (randomIndex == HadChoosen);
@@ -99,6 +126,56 @@ public class ItemChange : MonoBehaviour
         return Items[randomIndex];
     }
 
+    void RandomFold_Four()
+    {
+        int randomFold;
+
+        randomFold = Random.Range(0, 3);
+
+        //four location get unfamilarItems
+        for (int i = 0; i < 4; i++)
+        {
+            randomImage = GetRandomImage(unfamiliarItems);
+            _images[0].texture = randomImage;
+        }
+
+        //select one of them location to get familiarItems
+        switch (randomFold)
+        {
+            case 0:
+                FamiLocation = 0;
+                randomImage = GetRandomImage(familiarItems);
+                _images[0].texture = randomImage;
+                break;
+
+            case 1:
+                FamiLocation = 1;
+                randomImage = GetRandomImage(familiarItems);
+                _images[1].texture = randomImage;
+                break;
+
+            case 2:
+                FamiLocation = 2;
+                randomImage = GetRandomImage(familiarItems);
+                _images[2].texture = randomImage;
+                break;
+
+            case 3:
+                FamiLocation = 3;
+                randomImage = GetRandomImage(familiarItems);
+                _images[3].texture = randomImage;
+                break;
+        }
+
+    }
+
+    void RandomFold_One()
+    {
+        
+        randomImage = GetRandomImage(familiarItems);
+        _central.texture = randomImage;
+        
+    }
 
     
 }

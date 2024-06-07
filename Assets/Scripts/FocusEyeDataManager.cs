@@ -57,6 +57,27 @@ public class FocusEyeDataManager : MonoBehaviour
         return result ? data : null;
     }
 
+
+    //Check if user's eyes are closed over 5s
+    public void CheckEyesOpen(FocusEyeData data)
+    {
+        //確認眼睛是否睜開
+        bool IsEyesOpen;
+
+        EyeManager.Instance.GetLeftEyeOpenness(out data.LeftEyeOpenness);
+        EyeManager.Instance.GetRightEyeOpenness(out data.RightEyeOpenness);
+        if (data.LeftEyeOpenness < 0.5
+            && data.RightEyeOpenness < 0.5)
+        {
+            IsEyesOpen = false;
+        }
+        else
+        {
+            IsEyesOpen = true;
+        }
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {

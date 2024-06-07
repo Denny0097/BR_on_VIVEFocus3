@@ -41,7 +41,7 @@ public class TestBright : MonoBehaviour
                 if (_image.texture == Items[0])
                 {
                     //紀錄時切換黑白的時間
-                    _displayControl._logMessage.Time = "Change to black";
+                    //_displayControl._logMessage.Time = "Change to black";
 //                    _displayControl._dataManager.SaveTestTag(_displayControl._logMessage, flashTime.ToString());
 
                     //Black turn
@@ -52,7 +52,7 @@ public class TestBright : MonoBehaviour
                 else
                 {
                     //紀錄時切換黑白的時間
-                    _displayControl._logMessage.Time = "Change to white";
+                    //_displayControl._logMessage.Time = "Change to white";
  //                   _displayControl._dataManager.SaveTestTag(_displayControl._logMessage, flashTime.ToString());
 
                     //White turn

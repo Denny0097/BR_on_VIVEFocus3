@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 using UnityEngine.Networking;
 using System.Threading;
 using UnityEngine.UI;
@@ -13,14 +14,14 @@ public class ItemDisplayController : MonoBehaviour
     public bool isBlack = false;//不透明狀態
 
     public float _fadeSpeed = 0.07f;//透明度變化速率
-    public RawImage rawImage;
+    public RawImage _rawImage;
 
     public Color OriginColor;
     public Color GoalColor;
     /// </summary>
 
     public DisplayControl _displayControl;
-    
+
     public ItemChange _itemChange;
 
     //private bool _invoked = false;
@@ -29,11 +30,19 @@ public class ItemDisplayController : MonoBehaviour
     //反應後逼聲
     public AudioSource _changeModeBi;
 
+    //黑色背景的位置
+    private string CoverPath = Path.Combine(Application.persistentDataPath, "Image", "Bcakground.png");
+    //private string familiarImagesFolderPath = "Assets/Resources/Image/Bcakground.png";
+
 
     private void Start()
     {
-        rawImage.gameObject.SetActive(true);
-        OriginColor = rawImage.color;
+        _rawImage.gameObject.SetActive(true);
+        //Find cover texture
+        LoadImageFromFile(CoverPath, _rawImage);
+
+
+        OriginColor = _rawImage.color;
         _fadeSpeed = 1 / (_displayControl._roundTime / 2);
 
 
@@ -50,24 +59,24 @@ public class ItemDisplayController : MonoBehaviour
             if (_displayControl._makeFadeModeChange)
             {
                 //每次發出respound都會有一個bi聲
-                _changeModeBi.Play();
+                //_changeModeBi.Play();
                 _displayControl._makeFadeModeChange = false;
                 _runned = true;
-            
+
                 MakeFadeChange();
             }
 
-            if (_displayControl._roundCount == _displayControl._roundNum && _runned)
-            {
-                _runned = false;
-                //m_Fade.gameObject.SetActive(false);
-                _itemChange.Upper.texture = _itemChange.Items[8];
-                _itemChange.Lower.texture = _itemChange.Items[8];
+            //if (_displayControl._roundCount == _displayControl._roundNum && _runned)
+            //{
+            //    _runned = false;
+            //    //m_Fade.gameObject.SetActive(false);
+            //    _itemChange.Upper.texture = _itemChange.Items[8];
+            //    _itemChange.Lower.texture = _itemChange.Items[8];
+            //
+            //}
 
-            }
-        
 
-            if (isBlack )
+            if (isBlack)
             {
                 Fadein();
             }
@@ -80,6 +89,28 @@ public class ItemDisplayController : MonoBehaviour
     }
 
 
+    private void LoadImageFromFile(string filePath, RawImage image)
+    {
+        
+        if (File.Exists(filePath))
+        {
+            byte[] fileData = File.ReadAllBytes(filePath);
+            Texture2D texture = new Texture2D(2, 2);
+            if (texture.LoadImage(fileData))
+            {
+                image.texture = texture;
+                image.SetNativeSize(); // 可選，根據圖片的原始尺寸調整 RawImage 的大小
+            }
+            else
+            {
+                Debug.LogError("Failed to load texture from " + filePath);
+            }
+        }
+        else
+        {
+            Debug.LogError("File does not exist at " + filePath);
+        }
+    }
 
 
     //改變 fade in/out 的狀態
@@ -108,13 +139,13 @@ public class ItemDisplayController : MonoBehaviour
 
     public void Fadein()
     {
-        if (rawImage.color.a > 0)
+        if (_rawImage.color.a > 0)
         {
 
-            Color newColor = rawImage.color; // 複製原始顏色
+            Color newColor = _rawImage.color; // 複製原始顏色
             float t = Time.deltaTime * _fadeSpeed;
             newColor.a -= t;
-            rawImage.color = newColor;
+            _rawImage.color = newColor;
         }
 
     }
@@ -122,13 +153,13 @@ public class ItemDisplayController : MonoBehaviour
     //Cover越來越淺，畫面越來越清楚
     public void Fadeout()
     {
-        if(rawImage.color.a < 1)
+        if(_rawImage.color.a < 1)
         {
 
-            Color newColor = rawImage.color; // 複製原始顏色
+            Color newColor = _rawImage.color; // 複製原始顏色
             float t = Time.deltaTime * _fadeSpeed;
             newColor.a += t;
-            rawImage.color = newColor;
+            _rawImage.color = newColor;
         }
        
     }
@@ -138,17 +169,5 @@ public class ItemDisplayController : MonoBehaviour
 
         yield return null;
     }
-
-
-    //public void CountFadeRate()
-    //{
-        
-      //  _displayControl._logMessage.FadeRate = ""+rawImage.color.a.ToString();
-      //  _displayControl._dataManager.SaveFadeRate(_displayControl._logMessage);
-
-        
-//    }
-
-
 
 }

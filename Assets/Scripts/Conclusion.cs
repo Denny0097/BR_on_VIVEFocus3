@@ -9,37 +9,30 @@ public class Conclusion : MonoBehaviour
     public TMP_InputField _inputfield;
 
 
-    public void Add()
+    
+
+    public void Add(int Num)
     {
         int rawNumber = int.Parse(_inputfield.text);
-        rawNumber++;
+        rawNumber += Num;
         _inputfield.text = rawNumber.ToString();
     }
 
-    public void Minus()
-    {
-        
-        int rawNumber = int.Parse(_inputfield.text);
-        if(rawNumber >0)
-            rawNumber--;
-        _inputfield.text = rawNumber.ToString();
-
-    }
-
-    public void AddTen()
+    public void Minus(int Num)
     {
         int rawNumber = int.Parse(_inputfield.text);
-        rawNumber += 10;
+        if (rawNumber > 1)
+            rawNumber -= Num;
         _inputfield.text = rawNumber.ToString();
     }
 
-    public void MinusTen()
+
+    public void LocationAdd(int Num)
     {
-
         int rawNumber = int.Parse(_inputfield.text);
-        if (rawNumber > 0)
-            rawNumber -= 10;
+        if(rawNumber < 4)
+            rawNumber += Num;
         _inputfield.text = rawNumber.ToString();
-
     }
+
 }

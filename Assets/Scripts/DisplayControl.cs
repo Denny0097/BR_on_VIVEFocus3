@@ -14,8 +14,6 @@ using System.Threading;
 public class LogMessage
 {
     public string message;
-    public string FPS;
-    public string Time;
 }
 
 
@@ -53,6 +51,10 @@ public class DisplayControl : MonoBehaviour
 
     [HideInInspector]
     public bool _gameStart = false;     //實驗是否開始了
+
+    [HideInInspector]
+    public bool _gameStop = false;      //實驗是否暫停
+
     [HideInInspector]
     //public bool _roundStart = false;    //實驗中每回合的tag，start指示回合開始、end指示回合結束
 
@@ -98,6 +100,8 @@ public class DisplayControl : MonoBehaviour
     public GameObject _leftHandContr;
     public GameObject _intereactionMan;
 
+
+
     /// <summary>
     /// 實驗初始化，introduction的顯示
     /// </summary>
@@ -131,9 +135,8 @@ public class DisplayControl : MonoBehaviour
                 {
                     _respoundBi.Play();
 
-                    Debug.Log("Notice the target show up : round" + _roundCount.ToString() + " respond time");
                     _isRespondF = true;
-                    _logMessage.message = "Notice the target show up : round" + _roundCount.ToString() + " respond time";
+                    _logMessage.message = "Notice the appearance.";
                     _dataManager.SaveLogMessage(_logMessage);
 
                 }
@@ -144,10 +147,9 @@ public class DisplayControl : MonoBehaviour
                 {
                     _respoundBi.Play();
 
-                    Debug.Log("Notice the target disappear : round" + _roundCount.ToString() + " respond time");
                     _isRespondB = true;
                     _newRound = true;
-                    _logMessage.message = "Notice the target disappear : round" + _roundCount.ToString() + " respond time";
+                    _logMessage.message = "Notice the disappearance.";
                     _dataManager.SaveLogMessage(_logMessage);
 
                 }
@@ -155,12 +157,7 @@ public class DisplayControl : MonoBehaviour
 
             }
 
-            //紀錄幀數
-//            CountFPS();
-
-
         }
-
 
     }
 
@@ -176,13 +173,15 @@ public class DisplayControl : MonoBehaviour
 
         while (_roundCount <= _roundNum+1 && _gameStart == true)
         {
-            Debug.Log("wait round " + (_roundCount - 1).ToString() + " notice the target disappear");
+            _logMessage.message = "Round " + (_roundCount).ToString();
+            _dataManager.SaveLogMessage(_logMessage);
+
             while (!_newRound)
             //while (!Input.anyKey)
             {
                 yield return null;
             }
-            Debug.Log("get round " + (_roundCount-1).ToString() + " trigger");
+
             _startFadeout = false;
             if (_roundCount > _roundNum)
             {
@@ -198,14 +197,14 @@ public class DisplayControl : MonoBehaviour
                 _video.gameObject.SetActive(false);
 
                 _presentScreen.SetActive(false);//only for 展示用(為了顯示兩畫面)
-            //    _presentModeCanvas.SetActive(false); //..
+            //   _presentModeCanvas.SetActive(false); //..
 
 
                 _rightHandContr.SetActive(true);
                 _leftHandContr.SetActive(true);
                 _intereactionMan.SetActive(true);
                 _intro1.SetActive(true);
-            //   _intro2.SetActive(true);
+            //  _intro2.SetActive(true);
                 break;
             }
 
@@ -241,44 +240,48 @@ public class DisplayControl : MonoBehaviour
 
         PlayerPrefs.SetInt("GetData", 0);
 
+        //GameStart();
     }
 
 
     public void GameStart()
     {
-        ////if (InputDeviceControl.KeyDown(InputDeviceControl.ControlDevice.Right, CommonUsages.triggerButton) && !_gameStart)
-        //if (Input.anyKey && !_gameStart)
-        //{
-            _roundNum = int.Parse(_inputQuizNum.text);
-            _roundTime = int.Parse(_inputRoundTime.text);
 
-            //ThreadStart childref = new ThreadStart(CallToChildThread);
-            _intro1.SetActive(false);
-            //intro2.SetActive(false);
+        _roundNum = int.Parse(_inputQuizNum.text);
+        _roundTime = int.Parse(_inputRoundTime.text);
 
-            //controller disappear
-            _rightHandContr.SetActive(false);
-            _leftHandContr.SetActive(false);
-            _intereactionMan.SetActive(false);
+        //ThreadStart childref = new ThreadStart(CallToChildThread);
+        _intro1.SetActive(false);
+        //intro2.SetActive(false);
 
-            PlayerPrefs.SetInt("GetData", 1);//Take DataManager on
+        //controller disappear
+        _rightHandContr.SetActive(false);
+        _leftHandContr.SetActive(false);
+        _intereactionMan.SetActive(false);
 
-            _logMessage.message = "Experiment start";
-            _dataManager.SaveLogMessage(_logMessage);
+        PlayerPrefs.SetInt("GetData", 1);//Take DataManager on
+
+        _logMessage.message = "Experiment start";
+        _dataManager.SaveLogMessage(_logMessage);
 
             
-            _gameStart = true;
+        _gameStart = true;
             
-            //_roundStart = true;
+        //_roundStart = true;
 
-            _newRound = true;
-            //Run experiment -> RunExperiment()
-            _itemsScreen.SetActive(true);
-            _videoScreen.SetActive(true);
+        _newRound = true;
+        //Run experiment -> RunExperiment()
+        _itemsScreen.SetActive(true);
+        _videoScreen.SetActive(true);
+
+        rawImage.gameObject.SetActive(true);
+        Upper.gameObject.SetActive(true);
+        Lower.gameObject.SetActive(true);
+
+        _video.gameObject.SetActive(true);
             
-
-            StartCoroutine(RunExperiment());
-            //After experiment, turn to initial 
+        StartCoroutine(RunExperiment());
+        //After experiment, turn to initial 
 
     }
 
@@ -350,6 +353,8 @@ public class DisplayControl : MonoBehaviour
             yield return null;
         }
     }
+
+   
 
     //計算幀數
     //public void CountFPS()
