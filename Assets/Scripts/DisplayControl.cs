@@ -33,21 +33,14 @@ public class DisplayControl : MonoBehaviour
 
 
     public GameObject _intro1;//實驗介紹畫面
-
     public GameObject _intro2;//為了演示雙畫面，用在unity display2
-
+    public Text _restInstruct;
+    public RawImage _restTexture;
 
     public float _roundTime = 30; //實驗時間(from start to end per round)
-
-
     public int _roundNum; //實驗回合總數設定
-
-
     public int _roundCount = 1;//實驗當前回合
-
-
     public bool _newRound = true;    //fade out 反應後開始new round
-
 
     [HideInInspector]
     public bool _gameStart = false;     //實驗是否開始了
@@ -61,10 +54,8 @@ public class DisplayControl : MonoBehaviour
     private bool _startFadein = false;
     private bool _isRespondF = false;//Fadein階段的反應
 
-
     private bool _startFadeout = false;
     private bool _isRespondB = false;//Fadeawat階段的反應
-
 
     public bool _makeFadeModeChange = false;//true使fade mode change
     //bool waitingforinput = false;
@@ -78,13 +69,11 @@ public class DisplayControl : MonoBehaviour
     public TMP_InputField _inputQuizNum;
     public TMP_InputField _inputRoundTime;
 
-
     //反應後逼聲
     public AudioSource _respoundBi;
 
     //幀數變數
     public float showTime = 1f;
-   
 
     private int count = 0;
     private float deltaTime = 0f;
@@ -94,13 +83,12 @@ public class DisplayControl : MonoBehaviour
     //present用
     public GameObject _presentModeCanvas;
 
-
     //Controller
     public GameObject _rightHandContr;
     public GameObject _leftHandContr;
     public GameObject _intereactionMan;
 
-
+    
 
     /// <summary>
     /// 實驗初始化，introduction的顯示
@@ -170,6 +158,7 @@ public class DisplayControl : MonoBehaviour
     /// <returns></returns>
     private IEnumerator RunExperiment()
     {
+        _gameStop = false;
 
         while (_roundCount <= _roundNum+1 && _gameStart == true)
         {
@@ -183,6 +172,8 @@ public class DisplayControl : MonoBehaviour
             }
 
             _startFadeout = false;
+
+            //完成所有回合，物件開啟
             if (_roundCount > _roundNum)
             {
                 _gameStart = false;
@@ -208,31 +199,9 @@ public class DisplayControl : MonoBehaviour
                 break;
             }
 
-
-            _isRespondF = false;//每回合都設定獨立的反應trigger，反應過後設為true
-            _isRespondB = false;
-
-
-            //stall until item change and its mean next round is readying
-
-            _makeFadeModeChange = true;
-            _startFadein = true;
-            yield return new WaitForSeconds(_roundTime/2);
-            _startFadein = false;
-
-
-            _newRound = false;//開始新回合後重設回false
-
-            _makeFadeModeChange = true;
-            _startFadeout = true;
-            yield return new WaitForSeconds(_roundTime/2);
-            
-
-
+            yield return StartCoroutine(Experiment());
             _roundCount++;
-            
-            
-
+           
         }
 
         _logMessage.message = "Experiment over";
@@ -243,6 +212,30 @@ public class DisplayControl : MonoBehaviour
         //GameStart();
     }
 
+
+    private IEnumerator Practice()
+    {
+
+        _logMessage.message = "Practice 2 trial.";
+        _dataManager.SaveLogMessage(_logMessage);
+        for (int i = 0; i<2; i++)
+        {
+            while (!_newRound)
+            //while (!Input.anyKey)
+            {
+                yield return null;
+            }
+
+            yield return StartCoroutine(Experiment());
+
+        }
+        _gameStop = true;
+        //show text and canvas to overlay all screen items
+        _restInstruct.gameObject.SetActive(true);
+        _restTexture.enabled = true;
+
+        yield return StartCoroutine(Take_A_Break());
+    }
 
     public void GameStart()
     {
@@ -279,7 +272,13 @@ public class DisplayControl : MonoBehaviour
         Lower.gameObject.SetActive(true);
 
         _video.gameObject.SetActive(true);
-            
+
+
+        StartCoroutine(Practice());
+        _restTexture.enabled = false;
+        _restInstruct.gameObject.SetActive(false);
+        
+
         StartCoroutine(RunExperiment());
         //After experiment, turn to initial 
 
@@ -291,6 +290,29 @@ public class DisplayControl : MonoBehaviour
     {
         _intro1.SetActive(false);
         _testBright.SetActive(true);
+    }
+
+
+    private IEnumerator Experiment()
+    {
+        _isRespondF = false;//每回合都設定獨立的反應trigger，反應過後設為true
+        _isRespondB = false;
+
+
+        //stall until item change and its mean next round is readying
+
+        _makeFadeModeChange = true;
+        _startFadein = true;
+        yield return new WaitForSeconds(_roundTime / 2);
+        _startFadein = false;
+
+
+        _newRound = false;//開始新回合後重設回false
+
+        _makeFadeModeChange = true;
+        _startFadeout = true;
+        yield return new WaitForSeconds(_roundTime / 2);
+
     }
 
 
@@ -329,22 +351,7 @@ public class DisplayControl : MonoBehaviour
     }
 
 
-    //time threads to avoid delay
-    public void CallToChildThread()
-    {
-        Debug.Log("Child(Time) thread start");
-        //每15秒傳送執行的訊號，
-        //每30秒等待受試者trigger
-        while (true)
-        {
-            
-            if (_roundCount <= _roundNum)
-            {
-                break;
-            }
-        }
-    }
-
+   
     public static IEnumerator WaitForSeconds(float time)
     {
         float start = Time.realtimeSinceStartup;
@@ -354,24 +361,33 @@ public class DisplayControl : MonoBehaviour
         }
     }
 
-   
+    private IEnumerator Take_A_Break()
+    {
+        //while (!Input.anyKey)
+        while (!InputDeviceControl.KeyDown(InputDeviceControl.ControlDevice.Right, CommonUsages.triggerButton) || !Input.anyKey)
+        {
+            yield return null;
+        }
+
+    }
+
 
     //計算幀數
     //public void CountFPS()
     //{
-      //  count++;
-      //  deltaTime += Time.deltaTime;
-      //  if (deltaTime >= showTime)
-      //  {
-            
-      //      float milliSecond = deltaTime * 1000 / count;;
+    //  count++;
+    //  deltaTime += Time.deltaTime;
+    //  if (deltaTime >= showTime)
+    //  {
 
-      //      _logMessage.message = ""+milliSecond.ToString();
-      //      _dataManager.SaveFPS(_logMessage);
+    //      float milliSecond = deltaTime * 1000 / count;;
 
-      //      count = 0;
-      //      deltaTime = 0f;
-      //  }
-     //}
-//
+    //      _logMessage.message = ""+milliSecond.ToString();
+    //      _dataManager.SaveFPS(_logMessage);
+
+    //      count = 0;
+    //      deltaTime = 0f;
+    //  }
+    //}
+    //
 }

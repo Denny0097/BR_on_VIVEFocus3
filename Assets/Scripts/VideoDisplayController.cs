@@ -33,6 +33,30 @@ public class VideoDisplayController : MonoBehaviour
         }
     }
 
+    
+    void Update()
+    {
+        //每showtime秒更新
+        if(_displayControl._gameStart && !_displayControl._gameStop)
+        {
+            deltaTime += Time.deltaTime;
+            if (deltaTime >= showTime)
+            {
+                ChangeImage();
+                deltaTime = 0f;
+            }
+        }
+        
+
+        //收到結束訊號後停止右眼實驗畫面的顯示
+        if (!_displayControl._gameStart)
+        {
+            _video.gameObject.SetActive(false);
+        }
+    }
+
+
+
     private void LoadImagesFromFolder(string folderPath)
     {
         string[] imageTypes = { "*.BMP", "*.JPG", "*.GIF", "*.PNG" };
@@ -61,22 +85,6 @@ public class VideoDisplayController : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        //每showtime秒更新
-        deltaTime += Time.deltaTime;
-        if (deltaTime >= showTime)
-        {
-            ChangeImage();
-            deltaTime = 0f;
-        }
-
-        //收到結束訊號後停止右眼實驗畫面的顯示
-        if (!_displayControl._gameStart)
-        {
-            _video.gameObject.SetActive(false);
-        }
-    }
 
     public void ChangeImage()
     {

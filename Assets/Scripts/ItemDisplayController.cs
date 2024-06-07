@@ -17,7 +17,7 @@ public class ItemDisplayController : MonoBehaviour
     public RawImage _rawImage;
 
     public Color OriginColor;
-    public Color GoalColor;
+    private Color GoalColor;
     /// </summary>
 
     public DisplayControl _displayControl;
@@ -37,12 +37,17 @@ public class ItemDisplayController : MonoBehaviour
 
     private void Start()
     {
+
         _rawImage.gameObject.SetActive(true);
         //Find cover texture
         LoadImageFromFile(CoverPath, _rawImage);
 
-
+        Color newColor = _rawImage.color;
+        newColor.a = 0;
+        //Setting Fade in goal and Original color
+        GoalColor = newColor;
         OriginColor = _rawImage.color;
+
         _fadeSpeed = 1 / (_displayControl._roundTime / 2);
 
 
@@ -52,8 +57,8 @@ public class ItemDisplayController : MonoBehaviour
 
     void Update()
     {
-        //CountFadeRate();
-        if (_displayControl._gameStart)
+
+        if (_displayControl._gameStart && !_displayControl._gameStop)
         {
             //收到開始回合的訊號，右眼內容開始呈現
             if (_displayControl._makeFadeModeChange)
