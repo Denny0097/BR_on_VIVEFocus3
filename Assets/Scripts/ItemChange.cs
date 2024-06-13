@@ -24,11 +24,11 @@ public class ItemChange : MonoBehaviour
 
     //for avoid same image in two screen
     private int HadChoosen;
-    //private string familiarImagesFolderPath = Path.Combine(Application.persistentDataPath, "Image", "FamiliarItems");
-    //private string unfamiliarItemsImagesFolderPath= Path.Combine(Application.persistentDataPath, "Image", "UnfamiliarItems");
+    private string familiarImagesFolderPath = Path.Combine(Application.persistentDataPath, "Image", "FamiliarItems");
+    private string unfamiliarItemsImagesFolderPath = Path.Combine(Application.persistentDataPath, "Image", "UnfamiliarItems");
 
-    private string familiarImagesFolderPath = "Assets/Resources/Image/Items";
-    private string unfamiliarItemsImagesFolderPath = "Assets/Resources/Image/Items";
+    //private string familiarImagesFolderPath = "Assets/Resources/Image/Items";
+    //private string unfamiliarItemsImagesFolderPath = "Assets/Resources/Image/Items";
 
 
     //決定物品數量

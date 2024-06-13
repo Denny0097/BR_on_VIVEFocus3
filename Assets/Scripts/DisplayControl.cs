@@ -104,7 +104,7 @@ public class DisplayControl : MonoBehaviour
     /// </summary>
     void Start()
     {
-        GameStart();
+        //GameStart();
 
         //測試用
         //TestStart();

@@ -31,8 +31,8 @@ public class ItemDisplayController : MonoBehaviour
     public AudioSource _changeModeBi;
 
     //黑色背景的位置
-    //private string CoverPath = Path.Combine(Application.persistentDataPath, "Image", "Bcakground.png");
-    private string CoverPath = "Assets/Resources/Image/Background.png";
+    private string CoverPath = Path.Combine(Application.persistentDataPath, "Image", "Bcakground.png");
+    //private string CoverPath = "Assets/Resources/Image/Background.png";
 
 
     private void Start()
