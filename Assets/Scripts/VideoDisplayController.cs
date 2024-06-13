@@ -17,8 +17,8 @@ public class VideoDisplayController : MonoBehaviour
     private Texture randomImage;
     private float deltaTime = 0f;
     float showTime ;
-    private string imagesFolderPath = Path.Combine(Application.persistentDataPath, "Image", "Mondriands");
-    //private string imagesFolderPath = "Assets/Resources/Image/Mondriands";
+    //private string imagesFolderPath = Path.Combine(Application.persistentDataPath, "Image", "Mondriands");
+    private string imagesFolderPath = "Assets/Resources/Image/Mondriands";
     
 
     private void Start()

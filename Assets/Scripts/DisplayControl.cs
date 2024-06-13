@@ -19,11 +19,15 @@ public class LogMessage
 
 public class DisplayControl : MonoBehaviour
 {
+    //test calibration
+    public Calibration _cali;
+
 
     public GameObject _itemsScreen; //右眼畫面物件
     public RawImage rawImage;
-    public RawImage Upper;
-    public RawImage Lower;
+    public RawImage[] _images;
+    public RawImage _central;
+
 
     public GameObject _videoScreen; //左眼畫面物件
     public RawImage _video;
@@ -39,7 +43,7 @@ public class DisplayControl : MonoBehaviour
     public float _roundTime = 30; //實驗時間(from start to end per round)
 
     [HideInInspector]
-    public int _roundNum; //實驗回合總數設定
+    public int _numberOfTrial; //實驗回合總數設定
 
     [HideInInspector]
     public int _roundCount = 1;//實驗當前回合
@@ -72,6 +76,7 @@ public class DisplayControl : MonoBehaviour
 
     public TMP_InputField _inputQuizNum;
     public TMP_InputField _inputRoundTime;
+    public TMP_InputField _locationNum;
 
     //反應後逼聲
     public AudioSource _respoundBi;
@@ -99,11 +104,14 @@ public class DisplayControl : MonoBehaviour
     /// </summary>
     void Start()
     {
-        //GameStart();
+        GameStart();
 
         //測試用
         //TestStart();
         //GetComponent<AudioListener>().enabled = false;
+
+        //Calibration
+        
     }
 
 
@@ -160,15 +168,81 @@ public class DisplayControl : MonoBehaviour
     /// 當_roundStart表回合開始，漸亮到漸暗各一半_roundTime，
     /// </summary>
     /// <returns></returns>
-    private IEnumerator RunExperiment()
+    ///
+
+    private IEnumerator Experiment()
+    {
+        _isRespondF = false;//每回合都設定獨立的反應trigger，反應過後設為true
+        _isRespondB = false;
+
+
+        //stall until item change and its mean next round is readying
+
+        _makeFadeModeChange = true;
+        _startFadein = true;
+        yield return new WaitForSeconds(_roundTime / 2);
+        _startFadein = false;
+
+
+        _newRound = false;//開始新回合後重設回false
+
+        _makeFadeModeChange = true;
+        _startFadeout = true;
+        yield return new WaitForSeconds(_roundTime / 2);
+
+    }
+
+    public void TerminateExperiment()
+    {
+        _gameStart = false;
+
+        _roundCount = 1;
+        _itemsScreen.SetActive(false);
+        rawImage.gameObject.SetActive(false);
+        if (int.Parse(_locationNum.text) == 1)
+        {
+            _central.gameObject.SetActive(false);
+        }
+        else if (int.Parse(_locationNum.text) == 4)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                _images[i].gameObject.SetActive(false);
+            }
+        }
+        _videoScreen.SetActive(false);
+        _video.gameObject.SetActive(false);
+
+
+        _rightHandContr.SetActive(true);
+        _leftHandContr.SetActive(true);
+        _intereactionMan.SetActive(true);
+        _intro1.SetActive(true);
+        //_intro2.SetActive(true);
+    }
+
+
+
+    private IEnumerator RunExperiment(bool isPractice)
     {
         _gameStop = false;
+        int Limit;
 
-        while (_roundCount <= _roundNum+1 && _gameStart == true)
+        if (isPractice)
+        {
+            Limit = 2;
+        }
+        else
+        {
+            Limit = _numberOfTrial;
+        }
+
+        while (_roundCount <= Limit + 1 && _gameStart == true)
         {
             _logMessage.message = "Round " + (_roundCount).ToString();
             _dataManager.SaveLogMessage(_logMessage);
 
+            //在做出反應前不繼續下個trial
             while (!_newRound)
             //while (!Input.anyKey)
             {
@@ -177,71 +251,73 @@ public class DisplayControl : MonoBehaviour
 
             _startFadeout = false;
 
-            //完成所有回合，物件開啟
-            if (_roundCount > _roundNum)
+            if (_roundCount > Limit)
             {
-                _gameStart = false;
+                if (!isPractice)
+                {
+                    TerminateExperiment();                    
+                }
+                else
+                {
+                    _gameStop = true;
+                    //show text and canvas to overlay all screen items
+                    Debug.Log("Practice is done.");
+                    _restInstruct.text = "Practice completed,\n click trigger to start experiment";
+                    _restInstruct.gameObject.SetActive(true);
 
-                _roundCount = 1;
-                _itemsScreen.SetActive(false);
-                rawImage.gameObject.SetActive(false);
-                Upper.gameObject.SetActive(false);
-                Lower.gameObject.SetActive(false);
+                    //先暫時遮住物件，而不是消失，這樣不用重新呼喚物件
+                    _restTexture.enabled = true;
 
-                _videoScreen.SetActive(false);
-                _video.gameObject.SetActive(false);
+                    yield return StartCoroutine(Take_A_Break());
+                    _restInstruct.gameObject.SetActive(false);
+                }
 
-
-                _rightHandContr.SetActive(true);
-                _leftHandContr.SetActive(true);
-                _intereactionMan.SetActive(true);
-                _intro1.SetActive(true);
-            //  _intro2.SetActive(true);
                 break;
+
             }
 
             yield return StartCoroutine(Experiment());
             _roundCount++;
-           
+
         }
 
-        _logMessage.message = "Experiment over";
+        _logMessage.message =  isPractice ? "Practice completed": "Experiment completed";
         _dataManager.SaveLogMessage(_logMessage);
+        _roundCount = 1;
 
-        PlayerPrefs.SetInt("GetData", 0);
+        if (!isPractice)
+        {
+            PlayerPrefs.SetInt("GetData", 0);
+        }
 
-        //GameStart();
     }
 
 
-    private IEnumerator Practice()
+    private IEnumerator PracticeAndFormal()
     {
 
+        Debug.Log("Practice 2 trial.");
         _logMessage.message = "Practice 2 trial.";
         _dataManager.SaveLogMessage(_logMessage);
-        for (int i = 0; i<2; i++)
-        {
-            while (!_newRound)
-            //while (!Input.anyKey)
-            {
-                yield return null;
-            }
+        yield return StartCoroutine(RunExperiment(true));
 
-            yield return StartCoroutine(Experiment());
 
-        }
-        _gameStop = true;
-        //show text and canvas to overlay all screen items
-        _restInstruct.gameObject.SetActive(true);
-        _restTexture.enabled = true;
+        _restTexture.enabled = false;
+        _restInstruct.gameObject.SetActive(false);
 
-        yield return StartCoroutine(Take_A_Break());
+        Debug.Log("Formal experiment begin");
+        yield return StartCoroutine(RunExperiment(false));
+        //After experiment, turn to initial 
+
+
     }
+
+
 
     public void GameStart()
     {
 
-        _roundNum = int.Parse(_inputQuizNum.text);
+        _numberOfTrial = int.Parse(_inputQuizNum.text);
         _roundTime = int.Parse(_inputRoundTime.text);
 
         //ThreadStart childref = new ThreadStart(CallToChildThread);
@@ -269,19 +345,21 @@ public class DisplayControl : MonoBehaviour
         _videoScreen.SetActive(true);
 
         rawImage.gameObject.SetActive(true);
-        Upper.gameObject.SetActive(true);
-        Lower.gameObject.SetActive(true);
-
+        if (int.Parse(_locationNum.text) == 1)
+        {
+            _central.gameObject.SetActive(true);
+        }
+        else if (int.Parse(_locationNum.text) == 4)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                _images[i].gameObject.SetActive(true);
+            }
+        }
         _video.gameObject.SetActive(true);
 
-
-        StartCoroutine(Practice());
-        _restTexture.enabled = false;
-        _restInstruct.gameObject.SetActive(false);
-        
-
-        StartCoroutine(RunExperiment());
-        //After experiment, turn to initial 
+        //練習2trial
+        StartCoroutine(PracticeAndFormal());
 
     }
 
@@ -294,27 +372,6 @@ public class DisplayControl : MonoBehaviour
     }
 
 
-    private IEnumerator Experiment()
-    {
-        _isRespondF = false;//每回合都設定獨立的反應trigger，反應過後設為true
-        _isRespondB = false;
-
-
-        //stall until item change and its mean next round is readying
-
-        _makeFadeModeChange = true;
-        _startFadein = true;
-        yield return new WaitForSeconds(_roundTime / 2);
-        _startFadein = false;
-
-
-        _newRound = false;//開始新回合後重設回false
-
-        _makeFadeModeChange = true;
-        _startFadeout = true;
-        yield return new WaitForSeconds(_roundTime / 2);
-
-    }
 
     public static IEnumerator WaitForSeconds(float time)
     {
@@ -325,14 +382,15 @@ public class DisplayControl : MonoBehaviour
         }
     }
 
+
+
     private IEnumerator Take_A_Break()
     {
-        //while (!Input.anyKey)
-        while (!InputDeviceControl.KeyDown(InputDeviceControl.ControlDevice.Right, CommonUsages.triggerButton) || !Input.anyKey)
+        while (!Input.anyKey)
+        //while (!InputDeviceControl.KeyDown(InputDeviceControl.ControlDevice.Right, CommonUsages.triggerButton) || !Input.anyKey)
         {
             yield return null;
         }
-
     }
 
 

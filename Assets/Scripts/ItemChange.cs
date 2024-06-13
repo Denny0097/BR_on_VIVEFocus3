@@ -11,7 +11,6 @@ public class ItemChange : MonoBehaviour
 
     //images[0]: LeftUpper, images[1]:RightUpper, images[2]:LeftLow, images[3]:RightLow
     public RawImage[] _images;
-
     public RawImage _central;
 
     public int FamiLocation;
@@ -25,11 +24,11 @@ public class ItemChange : MonoBehaviour
 
     //for avoid same image in two screen
     private int HadChoosen;
-    private string familiarImagesFolderPath = Path.Combine(Application.persistentDataPath, "Image", "FamiliarItems");
-    private string unfamiliarItemsImagesFolderPath= Path.Combine(Application.persistentDataPath, "Image", "UnfamiliarItems");
+    //private string familiarImagesFolderPath = Path.Combine(Application.persistentDataPath, "Image", "FamiliarItems");
+    //private string unfamiliarItemsImagesFolderPath= Path.Combine(Application.persistentDataPath, "Image", "UnfamiliarItems");
 
-    //private string familiarImagesFolderPath = "Assets/Resources/Image/Items";
-    //private string unfamiliarItemsImagesFolderPath = "Assets/Resources/Image/Items";
+    private string familiarImagesFolderPath = "Assets/Resources/Image/Items";
+    private string unfamiliarItemsImagesFolderPath = "Assets/Resources/Image/Items";
 
 
     //決定物品數量
@@ -51,11 +50,11 @@ public class ItemChange : MonoBehaviour
         LoadImagesFromFolder(unfamiliarItemsImagesFolderPath, ref unfamiliarItems);
 
         //決定題數
-        if(int.Parse(_locationNum.text) == 1)
+        if (int.Parse(_locationNum.text) == 1)
         {
             _central.gameObject.SetActive(true);
         }
-        else
+        else if (int.Parse(_locationNum.text) == 4)
         {
             for(int i = 0; i < 4; i++)
             {
@@ -136,7 +135,7 @@ public class ItemChange : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             randomImage = GetRandomImage(unfamiliarItems);
-            _images[0].texture = randomImage;
+            _images[i].texture = randomImage;
         }
 
         //select one of them location to get familiarItems
