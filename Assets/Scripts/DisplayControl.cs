@@ -21,6 +21,8 @@ public class DisplayControl : MonoBehaviour
 {
     //test calibration
     public Calibration _cali;
+    public GameObject _caliCanvas_R;
+    public GameObject _caliCanvas_L;
 
 
     public GameObject _itemsScreen; //右眼畫面物件
@@ -97,6 +99,9 @@ public class DisplayControl : MonoBehaviour
     public GameObject _leftHandContr;
     public GameObject _intereactionMan;
 
+
+    //判斷是否初次進行實驗
+    bool isFirst = true;
     
 
     /// <summary>
@@ -111,6 +116,7 @@ public class DisplayControl : MonoBehaviour
         //GetComponent<AudioListener>().enabled = false;
 
         //Calibration
+        _logMessage.message = "Location number : 0:LeftUpper, 1:RightUpper, 2:LeftLower, 3:RightLower";
         
     }
 
@@ -170,7 +176,7 @@ public class DisplayControl : MonoBehaviour
     /// <returns></returns>
     ///
 
-    private IEnumerator Experiment()
+    private IEnumerator TrialStart()
     {
         _isRespondF = false;//每回合都設定獨立的反應trigger，反應過後設為true
         _isRespondB = false;
@@ -192,7 +198,7 @@ public class DisplayControl : MonoBehaviour
 
     }
 
-    public void TerminateExperiment()
+    public void ExperimentTerminate()
     {
         _gameStart = false;
 
@@ -237,6 +243,7 @@ public class DisplayControl : MonoBehaviour
             Limit = _numberOfTrial;
         }
 
+
         while (_roundCount <= Limit + 1 && _gameStart == true)
         {
             _logMessage.message = "Round " + (_roundCount).ToString();
@@ -255,7 +262,7 @@ public class DisplayControl : MonoBehaviour
             {
                 if (!isPractice)
                 {
-                    TerminateExperiment();                    
+                    ExperimentTerminate();                    
                 }
                 else
                 {
@@ -269,14 +276,16 @@ public class DisplayControl : MonoBehaviour
                     _restTexture.enabled = true;
 
                     yield return StartCoroutine(Take_A_Break());
+
                     _restInstruct.gameObject.SetActive(false);
+                    _restTexture.enabled = false;
                 }
 
                 break;
 
             }
 
-            yield return StartCoroutine(Experiment());
+            yield return StartCoroutine(TrialStart());
             _roundCount++;
 
         }
@@ -297,15 +306,14 @@ public class DisplayControl : MonoBehaviour
     {
 
         Debug.Log("Practice 2 trial.");
-        _logMessage.message = "Practice 2 trial.";
+        _logMessage.message = "Practice 2 trial";
         _dataManager.SaveLogMessage(_logMessage);
         yield return StartCoroutine(RunExperiment(true));
 
 
-        _restTexture.enabled = false;
-        _restInstruct.gameObject.SetActive(false);
-
         Debug.Log("Formal experiment begin");
+        _logMessage.message = "Formal experiment begin";
+        _dataManager.SaveLogMessage(_logMessage);
         yield return StartCoroutine(RunExperiment(false));
         //After experiment, turn to initial 
 
@@ -320,16 +328,20 @@ public class DisplayControl : MonoBehaviour
         _numberOfTrial = int.Parse(_inputQuizNum.text);
         _roundTime = int.Parse(_inputRoundTime.text);
 
-        //ThreadStart childref = new ThreadStart(CallToChildThread);
+
         _intro1.SetActive(false);
         //intro2.SetActive(false);
+        _caliCanvas_R.SetActive(false);
+        _caliCanvas_L.SetActive(false);
 
-        //controller disappear
+        //VR controller disappear
         _rightHandContr.SetActive(false);
         _leftHandContr.SetActive(false);
         _intereactionMan.SetActive(false);
 
-        PlayerPrefs.SetInt("GetData", 1);//Take DataManager on
+        //Take DataManager on
+        PlayerPrefs.SetInt("GetData", 1);
+        _dataManager.SaveLogMessage(_logMessage);
 
         _logMessage.message = "Experiment start";
         _dataManager.SaveLogMessage(_logMessage);
@@ -359,8 +371,12 @@ public class DisplayControl : MonoBehaviour
         _video.gameObject.SetActive(true);
 
         //練習2trial
-        StartCoroutine(PracticeAndFormal());
+        if (isFirst)
+            StartCoroutine(PracticeAndFormal());
+        else
+            StartCoroutine(RunExperiment(false));
 
+        isFirst = false;
     }
 
 

@@ -13,7 +13,12 @@ public class ItemChange : MonoBehaviour
     public RawImage[] _images;
     public RawImage _central;
 
+    //隨機選取1location作為famiiar
+    int randomFold;
     public int FamiLocation;
+
+    int[] imageNumOfItems = {0,0,0,0};
+    string unfamiLoactionRespond;
 
     //是否更換圖片的依據
     [HideInInspector]
@@ -27,6 +32,9 @@ public class ItemChange : MonoBehaviour
     private string familiarImagesFolderPath = Path.Combine(Application.persistentDataPath, "Image", "FamiliarItems");
     private string unfamiliarItemsImagesFolderPath = Path.Combine(Application.persistentDataPath, "Image", "UnfamiliarItems");
 
+
+    public DataManager _itemDataManager;
+    public LogMessage _logMessage = new LogMessage();
     //private string familiarImagesFolderPath = "Assets/Resources/Image/Items";
     //private string unfamiliarItemsImagesFolderPath = "Assets/Resources/Image/Items";
 
@@ -127,15 +135,15 @@ public class ItemChange : MonoBehaviour
 
     void RandomFold_Four()
     {
-        int randomFold;
-
+        unfamiLoactionRespond = "Unfamiliar item number: ";
         randomFold = Random.Range(0, 3);
-
+        
         //four location get unfamilarItems
         for (int i = 0; i < 4; i++)
         {
             randomImage = GetRandomImage(unfamiliarItems);
             _images[i].texture = randomImage;
+            imageNumOfItems[i] = HadChoosen;
         }
 
         //select one of them location to get familiarItems
@@ -166,6 +174,23 @@ public class ItemChange : MonoBehaviour
                 break;
         }
 
+        _logMessage.message = "Familiar location: " + FamiLocation.ToString();
+        _itemDataManager.SaveLogMessage(_logMessage);
+
+        _logMessage.message = "Familiar item number: " + HadChoosen.ToString();
+        _itemDataManager.SaveLogMessage(_logMessage);
+
+        for(int i = 0; i < 4; i++)
+        {
+            if (i != FamiLocation)
+            {
+                unfamiLoactionRespond += i.ToString() + ":" + imageNumOfItems[i].ToString() + ", ";
+            }
+            _logMessage.message = unfamiLoactionRespond;
+            _itemDataManager.SaveLogMessage(_logMessage);
+
+        }
+
     }
 
     void RandomFold_One()
@@ -173,7 +198,9 @@ public class ItemChange : MonoBehaviour
         
         randomImage = GetRandomImage(familiarItems);
         _central.texture = randomImage;
-        
+        _logMessage.message = "Familiar item number: " + HadChoosen.ToString();
+        _itemDataManager.SaveLogMessage(_logMessage);
+
     }
 
     
