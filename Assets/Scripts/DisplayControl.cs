@@ -271,7 +271,9 @@ public class DisplayControl : MonoBehaviour
                     //先暫時遮住物件，而不是消失，這樣不用重新呼喚物件
                     _restTexture.enabled = true;
                     //至少等待1s，避免按鍵多次反應
-                    yield return StartCoroutine(WaitForSeconds(1));
+                    _respoundBi.Play();
+                    yield return StartCoroutine(WaitForSeconds(0.5f));
+                    _respoundBi.Play();
                 }
 
                 break;
