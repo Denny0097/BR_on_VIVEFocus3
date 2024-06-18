@@ -116,7 +116,7 @@ public class DisplayControl : MonoBehaviour
         //GetComponent<AudioListener>().enabled = false;
 
         //Calibration
-        _logMessage.message = "Location number : 0:LeftUpper, 1:RightUpper, 2:LeftLower, 3:RightLower";
+        //_cali.CallCaliTwo();
         
     }
 
@@ -158,13 +158,9 @@ public class DisplayControl : MonoBehaviour
                     _logMessage.message = "Notice the disappearance.";
                     _dataManager.SaveLogMessage(_logMessage);
 
-                }
-               
-
+                }      
             }
-
         }
-
     }
 
 
@@ -229,12 +225,12 @@ public class DisplayControl : MonoBehaviour
 
 
 
-    private IEnumerator RunExperiment(bool isPractice)
+    private IEnumerator RunExperiment()
     {
         _gameStop = false;
         int Limit;
 
-        if (isPractice)
+        if (isFirst)
         {
             Limit = 2;
         }
@@ -260,7 +256,7 @@ public class DisplayControl : MonoBehaviour
 
             if (_roundCount > Limit)
             {
-                if (!isPractice)
+                if (!isFirst)
                 {
                     ExperimentTerminate();                    
                 }
@@ -274,11 +270,8 @@ public class DisplayControl : MonoBehaviour
 
                     //先暫時遮住物件，而不是消失，這樣不用重新呼喚物件
                     _restTexture.enabled = true;
-
-                    yield return StartCoroutine(Take_A_Break());
-
-                    _restInstruct.gameObject.SetActive(false);
-                    _restTexture.enabled = false;
+                    //至少等待1s，避免按鍵多次反應
+                    yield return StartCoroutine(WaitForSeconds(1));
                 }
 
                 break;
@@ -290,15 +283,19 @@ public class DisplayControl : MonoBehaviour
 
         }
 
-        _logMessage.message =  isPractice ? "Practice completed": "Experiment completed";
+
+        _logMessage.message =  isFirst ? "Practice completed": "Experiment completed";
         _dataManager.SaveLogMessage(_logMessage);
+        Debug.Log(_logMessage.message);
+
         _roundCount = 1;
 
-        if (!isPractice)
+        if (!isFirst)
         {
             PlayerPrefs.SetInt("GetData", 0);
         }
 
+        isFirst = false;
     }
 
 
@@ -308,13 +305,16 @@ public class DisplayControl : MonoBehaviour
         Debug.Log("Practice 2 trial.");
         _logMessage.message = "Practice 2 trial";
         _dataManager.SaveLogMessage(_logMessage);
-        yield return StartCoroutine(RunExperiment(true));
+        yield return StartCoroutine(RunExperiment());
 
+        yield return StartCoroutine(Take_A_Break());
+        _restInstruct.gameObject.SetActive(false);
+        _restTexture.enabled = false;
 
         Debug.Log("Formal experiment begin");
         _logMessage.message = "Formal experiment begin";
         _dataManager.SaveLogMessage(_logMessage);
-        yield return StartCoroutine(RunExperiment(false));
+        yield return StartCoroutine(RunExperiment());
         //After experiment, turn to initial 
 
 
@@ -341,8 +341,8 @@ public class DisplayControl : MonoBehaviour
 
         //Take DataManager on
         PlayerPrefs.SetInt("GetData", 1);
-        _dataManager.SaveLogMessage(_logMessage);
 
+        Debug.Log("Experiment start");
         _logMessage.message = "Experiment start";
         _dataManager.SaveLogMessage(_logMessage);
 
@@ -370,13 +370,9 @@ public class DisplayControl : MonoBehaviour
         }
         _video.gameObject.SetActive(true);
 
-        //練習2trial
-        if (isFirst)
-            StartCoroutine(PracticeAndFormal());
-        else
-            StartCoroutine(RunExperiment(false));
+        StartCoroutine(PracticeAndFormal());
 
-        isFirst = false;
+
     }
 
 

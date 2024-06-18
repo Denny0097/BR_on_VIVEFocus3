@@ -22,6 +22,11 @@ public class Calibration : MonoBehaviour
 
     public GameObject _initialUI;
 
+    //VR Controller
+    public GameObject _rightHandContr;
+    public GameObject _leftHandContr;
+    public GameObject _intereactionMan;
+
     //public GameObject _gamecontrol;
     private float Speed;
     
@@ -36,10 +41,21 @@ public class Calibration : MonoBehaviour
 
     public void CallCaliOne()
     {
+        //VR controller disappear
+        _rightHandContr.SetActive(false);
+        _leftHandContr.SetActive(false);
+        _intereactionMan.SetActive(false);
+
+        Debug.Log("CaliOne");
         StartCoroutine(Cali_One());
     }
     public void CallCaliTwo()
     {
+        //VR controller disappear
+        _rightHandContr.SetActive(false);
+        _leftHandContr.SetActive(false);
+        _intereactionMan.SetActive(false);
+
         StartCoroutine(Cali_Two());
     }
 
@@ -60,6 +76,9 @@ public class Calibration : MonoBehaviour
         _instruction_L.gameObject.SetActive(false);
 
         _initialUI.SetActive(true);
+        _rightHandContr.SetActive(true);
+        _leftHandContr.SetActive(true);
+        _intereactionMan.SetActive(true);
         //Cali1 intruc
         //...
     }
@@ -90,6 +109,11 @@ public class Calibration : MonoBehaviour
         yield return StartCoroutine(TargetShow());
 
         _initialUI.SetActive(true);
+        //VR controller disappear
+        _rightHandContr.SetActive(true);
+        _leftHandContr.SetActive(true);
+        _intereactionMan.SetActive(true);
+
     }
 
 
@@ -196,6 +220,10 @@ public class Calibration : MonoBehaviour
         _instruction_L.text = "";
         _instruction_R.gameObject.SetActive(false);
         _instruction_L.gameObject.SetActive(false);
+        //VR controller disappear
+        _rightHandContr.SetActive(true);
+        _leftHandContr.SetActive(true);
+        _intereactionMan.SetActive(true);
 
     }
 

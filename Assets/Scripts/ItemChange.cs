@@ -31,13 +31,13 @@ public class ItemChange : MonoBehaviour
     private int HadChoosen;
     private string familiarImagesFolderPath = Path.Combine(Application.persistentDataPath, "Image", "FamiliarItems");
     private string unfamiliarItemsImagesFolderPath = Path.Combine(Application.persistentDataPath, "Image", "UnfamiliarItems");
+    //private string familiarImagesFolderPath = "Assets/Resources/Image/Items";
+    //private string unfamiliarItemsImagesFolderPath = "Assets/Resources/Image/Items";
 
 
     public DataManager _itemDataManager;
     public LogMessage _logMessage = new LogMessage();
-    //private string familiarImagesFolderPath = "Assets/Resources/Image/Items";
-    //private string unfamiliarItemsImagesFolderPath = "Assets/Resources/Image/Items";
-
+    
 
     //決定物品數量
     public TMP_InputField _locationNum;
