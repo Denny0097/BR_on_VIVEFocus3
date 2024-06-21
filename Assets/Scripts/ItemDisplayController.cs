@@ -15,6 +15,9 @@ public class ItemDisplayController : MonoBehaviour
 
     public float _fadeSpeed = 0.07f;//透明度變化速率
     public RawImage _rawImage;
+    public Camera _rightCamera;
+    public Camera _leftCamera;
+
 
     public Color OriginColor;
     private Color GoalColor;
@@ -47,6 +50,8 @@ public class ItemDisplayController : MonoBehaviour
         //Setting Fade in goal and Original color
         GoalColor = newColor;
         OriginColor = _rawImage.color;
+        _rightCamera.backgroundColor = OriginColor;
+        _leftCamera.backgroundColor = OriginColor;
 
         _fadeSpeed = 1 / (_displayControl._roundTime / 2);
 
