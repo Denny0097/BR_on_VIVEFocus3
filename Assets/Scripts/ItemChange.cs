@@ -136,7 +136,7 @@ public class ItemChange : MonoBehaviour
     void RandomFold_Four()
     {
         unfamiLoactionRespond = "Unfamiliar item number: ";
-        randomFold = Random.Range(0, 3);
+        randomFold = Random.Range(0, 4);
         
         //four location get unfamilarItems
         for (int i = 0; i < 4; i++)
@@ -146,7 +146,7 @@ public class ItemChange : MonoBehaviour
             imageNumOfItems[i] = HadChoosen;
         }
 
-        //select one of them location to get familiarItems
+        //select one of the location to get familiarItems
         switch (randomFold)
         {
             case 0:
