@@ -38,7 +38,6 @@ During the experiment, one field of view was designated to display noise(Mondria
 ![image](https://github.com/user-attachments/assets/5b32f432-2f49-40d6-8d5d-9dde6f6e8269)
 
 ### Output
-![image](https://github.com/user-attachments/assets/9bfbdf83-2680-41ff-844a-f8b54eee4df7)
 
 Addr: “Android/data/com.DefaultCompany/files/Output/”
 
