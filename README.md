@@ -1,5 +1,5 @@
 # BR
-## Procedure
+## Procedural
 During the experiment, one field of view was designated to display noise(Mondrians), while the other field of view was used to observe the screen. Participants were instructed to respond when an object was seen.
 
 ![image](https://github.com/user-attachments/assets/5d2a2bf3-6b9e-44b4-9d12-8f0979691ce0)
@@ -30,3 +30,14 @@ During the experiment, one field of view was designated to display noise(Mondria
 
 ### RespondAndRecords
 ![image](https://github.com/user-attachments/assets/77462116-c0f0-4405-a04c-c3f625e3a3c5)
+
+### Setting
+#### Objectives
+![image](https://github.com/user-attachments/assets/122a09d3-3afd-4c9c-a0fd-2184ead1e5db)
+#### Modriands
+![image](https://github.com/user-attachments/assets/5b32f432-2f49-40d6-8d5d-9dde6f6e8269)
+
+### Output
+“Android/data/com.DefaultCompany/files/Output/”
+EyeData: {EyeDirection, Openness...}
+LogMessage: {Experiment start, Fade in/out, Respond, Experiment over}
