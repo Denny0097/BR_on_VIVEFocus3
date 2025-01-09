@@ -2,10 +2,10 @@
 ## Procedure
 During the experiment, one field of view was designated to display noise(Mondrians), while the other field of view was used to observe the screen. Participants were instructed to respond when an object was seen.
 
-![截圖 2025-01-09 上午11.24.01](https://hackmd.io/_uploads/BygwW62Lyx.png)
+![image](https://github.com/user-attachments/assets/5d2a2bf3-6b9e-44b4-9d12-8f0979691ce0)
 
 ## UI
-![截圖 2025-01-09 中午12.00.45](https://hackmd.io/_uploads/SJ6bqa38kx.png)
+![image](https://github.com/user-attachments/assets/f7292194-c7db-4a2a-bc09-ef86a7efa0dd)
 - Round time(s) : Control experiment duriation per round.
 - Flash frequency(Hz) : Control noise(Mondrians) frequency.
 - Game rounds : Control rounds of experiment. 
@@ -18,15 +18,15 @@ During the experiment, one field of view was designated to display noise(Mondria
 
 
 ### ItemNnumber
-![截圖 2025-01-09 上午11.19.31](https://hackmd.io/_uploads/HJkUgT2UJg.png)
+![image](https://github.com/user-attachments/assets/b613bf8d-0a7c-491f-88ff-379901d5055c)
 ### Calibration_1
-![截圖 2025-01-09 上午11.20.21](https://hackmd.io/_uploads/BkWKxa2Ukl.png)
+![image](https://github.com/user-attachments/assets/8fed1228-0fec-459e-b48f-147d0131916b)
 
 ### Calibration_2
-![截圖 2025-01-09 上午11.22.49](https://hackmd.io/_uploads/rkrf-a3Ikx.png)
+![image](https://github.com/user-attachments/assets/c3c55499-6b11-44b4-a967-37071718e981)
 - records of Calibration_2。
 
-![截圖 2025-01-09 上午11.23.09](https://hackmd.io/_uploads/Bys7-an81g.png)
+![image](https://github.com/user-attachments/assets/1eb5acbd-cb68-482d-ab1d-9b13b7d1accd)
 
 ### RespondAndRecords
-![截圖 2025-01-09 上午11.22.21](https://hackmd.io/_uploads/r1cg-anLke.png)
+![image](https://github.com/user-attachments/assets/77462116-c0f0-4405-a04c-c3f625e3a3c5)
