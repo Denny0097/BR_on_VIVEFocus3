@@ -1,5 +1,5 @@
 # BR
-## Procedural
+## procedure
 During the experiment, one field of view was designated to display noise(Mondrians), while the other field of view was used to observe the screen. Participants were instructed to respond when an object was seen.
 
 ![image](https://github.com/user-attachments/assets/5d2a2bf3-6b9e-44b4-9d12-8f0979691ce0)
@@ -7,7 +7,7 @@ During the experiment, one field of view was designated to display noise(Mondria
 ## UI
 ![image](https://github.com/user-attachments/assets/f7292194-c7db-4a2a-bc09-ef86a7efa0dd)
 - Round time(s) : Control experiment duriation per round.
-- Flash frequency(Hz) : Control noise(Mondrians) frequency.
+- Flash frequency(Hz) : Control noise(Mondrians) update frequency.
 - Game rounds : Control rounds of experiment. 
 - [Item number](###ItemNnumber) : Control objects displayed number
 - [Calibration1](###Calibration_1) : The button is used to start Calibration_1
@@ -38,6 +38,7 @@ During the experiment, one field of view was designated to display noise(Mondria
 ![image](https://github.com/user-attachments/assets/5b32f432-2f49-40d6-8d5d-9dde6f6e8269)
 
 ### Output
+![image](https://github.com/user-attachments/assets/9bfbdf83-2680-41ff-844a-f8b54eee4df7)
 
 Addr: “Android/data/com.DefaultCompany/files/Output/”
 
