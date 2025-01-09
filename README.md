@@ -38,6 +38,8 @@ During the experiment, one field of view was designated to display noise(Mondria
 ![image](https://github.com/user-attachments/assets/5b32f432-2f49-40d6-8d5d-9dde6f6e8269)
 
 ### Output
-“Android/data/com.DefaultCompany/files/Output/”
-EyeData: {EyeDirection, Openness...}
-LogMessage: {Experiment start, Fade in/out, Respond, Experiment over}
+
+Addr: “Android/data/com.DefaultCompany/files/Output/”
+
+- EyeData: {EyeDirection, Openness...}
+- LogMessage: {Experiment start, Fade in/out, Respond, Experiment over}
